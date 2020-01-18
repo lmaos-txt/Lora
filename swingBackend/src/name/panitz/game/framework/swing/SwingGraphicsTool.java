@@ -4,14 +4,17 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.Font;
-import java.net.URL;
+import java.util.List;
 import javax.swing.ImageIcon;
 
 import name.panitz.game.framework.GraphicsTool;
 import name.panitz.game.framework.GameObject;
+import name.panitz.game.framework.fx.Sprite;
 
 public class SwingGraphicsTool implements GraphicsTool<Image>{
   Graphics g;
+  List<Sprite> spriteList;
+  Boolean spritesLoaded = false;
 	
   public SwingGraphicsTool(Graphics g) {
     this.g = g;
@@ -54,6 +57,11 @@ public class SwingGraphicsTool implements GraphicsTool<Image>{
   }
 
   @Override
+  public void loadSprites(GraphicsTool<Image> gt) {
+    //TODO load SPrites for Swing
+  }
+
+  @Override
   public  Image generateImage(String name, GameObject<Image> go){
     ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource(name));
     go.setWidth(image.getIconWidth());
@@ -63,6 +71,7 @@ public class SwingGraphicsTool implements GraphicsTool<Image>{
 
   @Override
   public Image generateMap(String URL, GameObject<Image> go) {
+    //TODO Generate Map
     return null;
   }
 
@@ -70,9 +79,7 @@ public class SwingGraphicsTool implements GraphicsTool<Image>{
   public void setColor(double r, double gr, double b) {
     g.setColor(new Color((float)r, (float)gr, (float)b));
   }
-  public void loadMap(String URL){
 
-  }
 }
 
 

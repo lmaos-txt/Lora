@@ -3,11 +3,9 @@ package de.lmaos._code.lora;
 
 import name.panitz.game.framework.*;
 
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Lora<I,S> extends AbstractGame<I, S> {
 
@@ -32,9 +30,52 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	@Override
 	public void doChecks() {
-
+		getPlayer().move();
 	}
 
+	@Override
+	public void keyPressedReaction(KeyCode keyCode) {
+		if(null != keyCode){
+			switch (keyCode){
+				case VK_W:
+					if(getPlayer().getVelocity().y != -3)
+						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
+					break;
+				case VK_A:
+					if(getPlayer().getVelocity().x != -3)
+						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
+					break;
+				case VK_S:
+					if(getPlayer().getVelocity().y != 3)
+					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y +3));
+					break;
+				case VK_D:
+					if(getPlayer().getVelocity().x != 3)
+						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
+					break;
+			}
+		}
+	}
+
+	@Override
+	public void keyReleasedReaction(KeyCode keyCode) {
+		if(null != keyCode){
+			switch (keyCode){
+				case VK_W:
+					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y + 3));
+					break;
+				case VK_A:
+					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
+					break;
+				case VK_S:
+					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
+					break;
+				case VK_D:
+					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
+					break;
+			}
+		}
+	}
 
 	@Override
 	public void paintTo(GraphicsTool<I> g) {

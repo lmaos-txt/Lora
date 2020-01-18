@@ -22,7 +22,6 @@ public interface GameObject<I> extends Movable, Paintable<I> {
     return that.isLeftOf(this);
   }
 
-
   default boolean isAbove(GameObject<?> that) {
     return this.getPos().y + this.getHeight() < that.getPos().y;
   }
@@ -40,7 +39,6 @@ public interface GameObject<I> extends Movable, Paintable<I> {
             && getPos().y + getHeight() + 2 > that.getPos().y;
   }
 
-  
   default void move() {
     getPos().move(getVelocity());
   }
