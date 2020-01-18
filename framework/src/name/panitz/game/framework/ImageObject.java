@@ -32,6 +32,9 @@ public class ImageObject<I> extends AbstractGameObject<I>{
     this.imageFileName = imageFileName;
     changed  = true;
   }
+  public void initializeImage(GraphicsTool<I> g){
+    img = g.generateImage(imageFileName,this);
+  }
 
   @Override
   public void paintTo(GraphicsTool<I> g) {

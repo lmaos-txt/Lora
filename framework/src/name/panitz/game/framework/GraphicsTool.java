@@ -10,7 +10,8 @@ public interface GraphicsTool<I> {
 
   void setColor(double red, double green, double blue);
   void drawString(double x,double y,int fntsize, String fntName, String text);
-  
+  void loadSprites(GraphicsTool<I> gt);
+
   default void drawString(double x,double y,int fontSize, String text){
     drawString(x,y,fontSize,"Helvetica",text);
   }

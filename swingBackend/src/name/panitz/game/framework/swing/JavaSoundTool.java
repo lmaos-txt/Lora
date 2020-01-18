@@ -38,7 +38,6 @@ public class JavaSoundTool implements SoundTool<AudioInputStream> {
       clip.open(sound);
       clip.start();
     } catch (LineUnavailableException | IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }

@@ -9,7 +9,7 @@ public class Sprite extends SpriteProvider<Image> {
 	public Sprite(String imageFileName, String tag, GraphicsTool<Image> g) {
 		super(imageFileName);
 		super.setTag(tag);
-		super.paintTo(g);
+		super.initializeImage(g);
 	}
 
 	public Sprite(String imageFileName, Vertex pos, Vertex motion) {

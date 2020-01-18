@@ -2,3 +2,6 @@
 Jamepad-1.3.2.jar
 Lora.iml
 out
+/JfxBackend/JfxBackend.iml
+/framework/framework.iml
+/swingBackend/swingBackend.iml

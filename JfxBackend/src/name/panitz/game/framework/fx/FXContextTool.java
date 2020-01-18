@@ -98,14 +98,16 @@ public class FXContextTool implements GraphicsTool<Image>{
 		return null;
 	}
 
-	private void loadSprites(GraphicsTool<Image> g) {
+	public void loadSprites(GraphicsTool<Image> g) {
 		spritesLoaded = true;
 		spriteList = new ArrayList<>();
 		File resFolder = new File("src/res/sprites");
 		File[] listOfFiles = resFolder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
-			spriteList.add(new Sprite(listOfFiles[i].toString().substring(4),listOfFiles[i].toString().substring(8).substring(0,listOfFiles[i].toString().length() -4),g));
+			spriteList.add(new Sprite(listOfFiles[i].toString().substring(4),
+					listOfFiles[i].toString().substring(16).substring(0,listOfFiles[i].toString().substring(16).length() -4)
+					,g));
 		}
 
 	}
@@ -113,7 +115,7 @@ public class FXContextTool implements GraphicsTool<Image>{
 	private Image getSprite(List<Sprite> list,String tag){
 		if(spritesLoaded){
 			for (int i = 0; i < list.size(); i++) {
-				if(list.get(i).getTag() == tag)
+				if(list.get(i).getTag().equals(tag))
 				return list.get(i).getImage();
 			}
 		}

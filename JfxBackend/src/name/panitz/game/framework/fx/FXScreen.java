@@ -26,7 +26,7 @@ public class FXScreen extends Canvas {
 
     GraphicsContext gc = this.getGraphicsContext2D();
     GraphicsTool<Image> gct = new FXContextTool(gc);
-
+    gct.loadSprites(gct);
     logic.paintTo(gct);
 
 
