@@ -58,11 +58,11 @@ public class SwingGraphicsTool implements GraphicsTool<Image>{
 
   @Override
   public void loadSprites(GraphicsTool<Image> gt) {
-    //TODO load SPrites for Swing
+    //TODO load Sprites for Swing
   }
 
   @Override
-  public  Image generateImage(String name, GameObject<Image> go){
+  public  Image generateImage(String name, GameObject<Image> go, int scaleFactor){
     ImageIcon image = new ImageIcon(getClass().getClassLoader().getResource(name));
     go.setWidth(image.getIconWidth());
     go.setHeight(image.getIconHeight());

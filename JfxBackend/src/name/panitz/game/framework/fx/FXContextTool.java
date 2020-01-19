@@ -67,8 +67,9 @@ public class FXContextTool implements GraphicsTool<Image>{
 		gc.fillText(text,x,y);
 	}
 	@Override
-	public Image generateImage(String name,GameObject<Image> go){
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream(name),64,64,true,true);
+	public Image generateImage(String name,GameObject<Image> go, int scaleFactor){
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream(name),16 * scaleFactor,
+				16 * scaleFactor,true,true);
 		go.setWidth(image.getWidth());
 		go.setHeight(image.getHeight());
 		return image;
@@ -141,6 +142,8 @@ public class FXContextTool implements GraphicsTool<Image>{
 			return getSprite(spriteList,"stone");
 		if(c.equals(new Color(255,0,0)))
 			return getSprite(spriteList,"path");
+		if(c.equals(new Color(46,46,46)))
+			return getSprite(spriteList,"cauldron");
 		return null;
 	}
 

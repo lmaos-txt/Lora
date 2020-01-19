@@ -40,18 +40,22 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 				case VK_W:
 					if(getPlayer().getVelocity().y != -3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
+					lora.setFacing(new Vertex(0,-1));
 					break;
 				case VK_A:
 					if(getPlayer().getVelocity().x != -3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
+					lora.setFacing(new Vertex(-1,0));
 					break;
 				case VK_S:
 					if(getPlayer().getVelocity().y != 3)
 					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y +3));
+					lora.setFacing(new Vertex(0,1));
 					break;
 				case VK_D:
 					if(getPlayer().getVelocity().x != 3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
+					lora.setFacing(new Vertex(0,-1));
 					break;
 			}
 		}

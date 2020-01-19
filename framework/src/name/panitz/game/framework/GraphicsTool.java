@@ -27,7 +27,7 @@ public interface GraphicsTool<I> {
     fillOval(x, y, w, w);
   }
 
-  I generateImage(String name, GameObject<I> go);
+  I generateImage(String name, GameObject<I> go, int ScaleFactor);
   I generateMap(String URL,GameObject<I> go);
 }
 
