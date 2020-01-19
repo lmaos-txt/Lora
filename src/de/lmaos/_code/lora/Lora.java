@@ -19,8 +19,8 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		File resFolder = new File("src/res");
 		List<ImageObject<I>> tmp = new ArrayList<>();
 		getGOss().add(tmp);
-		MapObject<I> map = new MapObject<>("src\\res\\maps\\map1\\map1.png"
-			, new Vertex(0,0),new Vertex(0,0));
+		MapObject<I> map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
+			new Vertex(0,0));
 
 		List<MapObject<I>> mapObjects = new ArrayList<>();
 		mapObjects.add(map);

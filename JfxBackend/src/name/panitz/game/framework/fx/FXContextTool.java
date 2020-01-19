@@ -9,6 +9,7 @@ import name.panitz.game.framework.GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
+import name.panitz.game.framework.ImageObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -76,16 +77,26 @@ public class FXContextTool implements GraphicsTool<Image>{
 	@Override
 	public Image generateMap(String URL, GameObject<Image> go) {
 		try {
-			BufferedImage buff = ImageIO.read(new File(URL));
+			File resFolder = new File(URL);
+			File[] listOfFiles = resFolder.listFiles();
+			List<File> fileArray = new ArrayList<>();
+			BufferedImage buff = ImageIO.read(new File(String.valueOf(listOfFiles[0])));
 			Canvas c = new Canvas();
 			GraphicsContext gc = c.getGraphicsContext2D();
-			c.setWidth(1920);//TBD
-			c.setHeight(1080);
-			for (int y = 0; y < buff.getHeight(); y++) {
-				for (int x = 0; x < buff.getWidth(); x++) {
-					Color tmpC = new Color(buff.getRGB(x,y));
-					gc.drawImage(getImage(tmpC),x*64,y*64);
+			c.setWidth(buff.getWidth()* 64);//TBD
+			c.setHeight(buff.getHeight() * 64);
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if(listOfFiles[i].toString().contains("layer"))
+					fileArray.add(new File(listOfFiles[i].toString()));
+			}
 
+			for (int i = 0; i < fileArray.size(); i++) {
+				buff = ImageIO.read(fileArray.get(i));
+				for (int y = 0; y < buff.getHeight(); y++) {
+					for (int x = 0; x < buff.getWidth(); x++) {
+						Color tmpC = new Color(buff.getRGB(x, y));
+						gc.drawImage(getImage(tmpC), x * 64, y * 64);
+					}
 				}
 			}
 			Image tmp = pixelScaleAwareCanvasSnapshot(c,1.0);
@@ -126,7 +137,7 @@ public class FXContextTool implements GraphicsTool<Image>{
 			return getSprite(spriteList,"grass");
 		if(c.equals(new Color(0,0,255)))
 			return getSprite(spriteList,"water");
-		if(c.equals(new Color(255,0,155)))
+		if(c.equals(new Color(255,0,255)))
 			return getSprite(spriteList,"stone");
 		if(c.equals(new Color(255,0,0)))
 			return getSprite(spriteList,"path");
