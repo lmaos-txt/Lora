@@ -16,51 +16,52 @@ import name.panitz.game.framework.SoundObject;
 
 
 @SuppressWarnings("serial")
-public class SwingScreen extends JPanel{
-  GameLogic<Image,AudioInputStream> logic;
-  Timer t;
+public class SwingScreen extends JPanel {
+    GameLogic<Image, AudioInputStream> logic;
+    Timer t;
 
-  private JavaSoundTool soundTool = new JavaSoundTool();
+    private JavaSoundTool soundTool = new JavaSoundTool();
 
-  public SwingScreen(GameLogic<Image,AudioInputStream> gl) {
-    this.logic = gl;
+    public SwingScreen(GameLogic<Image, AudioInputStream> gl) {
+        this.logic = gl;
 
-    t = new Timer(13, (ev)->{
-      logic.move();
-      logic.doChecks();
-      repaint();
-      getToolkit().sync();
+        t = new Timer(13, (ev) -> {
+            logic.move();
+            logic.doChecks();
+            repaint();
+            getToolkit().sync();
 
-      logic.playSounds(soundTool);
-      requestFocus();
-    });
-    t.start();
-		
-    addKeyListener(new KeyAdapter() {	
-      @Override
-      public void keyPressed(KeyEvent e) {
-        logic.keyPressedReaction(KeyCode.fromCode(e.getKeyCode()));
-      }
-      @Override
-      public void keyReleased(KeyEvent e) {
-        logic.keyReleasedReaction(KeyCode.fromCode(e.getKeyCode()));
-      }
+            logic.playSounds(soundTool);
+            requestFocus();
+        });
+        t.start();
 
-    });
-    setFocusable(true);
-    requestFocus();
-  }
-	
-  @Override
-  public Dimension getPreferredSize() {
-    return new Dimension((int)logic.getWidth(),(int)logic.getHeight());
-  }
-	
-  @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    logic.paintTo(new SwingGraphicsTool(g));
-  }
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                logic.keyPressedReaction(KeyCode.fromCode(e.getKeyCode()));
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                logic.keyReleasedReaction(KeyCode.fromCode(e.getKeyCode()));
+            }
+
+        });
+        setFocusable(true);
+        requestFocus();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension((int) logic.getWidth(), (int) logic.getHeight());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        logic.paintTo(new SwingGraphicsTool(g));
+    }
 
 }
 

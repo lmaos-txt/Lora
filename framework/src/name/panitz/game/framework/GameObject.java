@@ -3,49 +3,56 @@ package name.panitz.game.framework;
 import java.awt.*;
 
 public interface GameObject<I> extends Movable, Paintable<I> {
-  double getWidth();
-  double getHeight();
-  void setWidth(double w);
-  void setHeight(double h);
+    double getWidth();
 
-  Vertex getPos();
+    void setWidth(double w);
 
-  Vertex getVelocity();
-  void setVelocity(Vertex v);
+    double getHeight();
+
+    void setHeight(double h);
+
+    Vertex getPos();
+
+    Vertex getVelocity();
+
+    void setVelocity(Vertex v);
 
 
-  default boolean isLeftOf(GameObject<?> that) {
-    return this.getPos().x + this.getWidth() < that.getPos().x;
-  }
+    default boolean isLeftOf(GameObject<?> that) {
+        return this.getPos().x + this.getWidth() < that.getPos().x;
+    }
 
-  default boolean isRightOf(GameObject<?> that) {
-    return that.isLeftOf(this);
-  }
+    default boolean isRightOf(GameObject<?> that) {
+        return that.isLeftOf(this);
+    }
 
-  default boolean isAbove(GameObject<?> that) {
-    return this.getPos().y + this.getHeight() < that.getPos().y;
-  }
+    default boolean isAbove(GameObject<?> that) {
+        return this.getPos().y + this.getHeight() < that.getPos().y;
+    }
 
-  default boolean touches(GameObject<?> that) {
-    if (this.isLeftOf(that)) return false;
-    if (that.isLeftOf(this)) return false;
-    if (this.isAbove(that))  return false;
-    if (that.isAbove(this))  return false;
-    return true;
-  }
+    default boolean touches(GameObject<?> that) {
+        if (this.isLeftOf(that)) return false;
+        if (that.isLeftOf(this)) return false;
+        if (this.isAbove(that)) return false;
+        return !that.isAbove(this);
+    }
 
- default boolean isStandingOnTopOf(GameObject<?> that) {
-    return !(isLeftOf(that) || isRightOf(that)) && isAbove(that)
-            && getPos().y + getHeight() + 2 > that.getPos().y;
-  }
+    default boolean isStandingOnTopOf(GameObject<?> that) {
+        return !(isLeftOf(that) || isRightOf(that)) && isAbove(that)
+                && getPos().y + getHeight() + 2 > that.getPos().y;
+    }
 
-  default void move() {
-    getPos().move(getVelocity());
-  }
-  default double size(){return getWidth() * getHeight();}
-  default boolean isLargerThan(GameObject<?> that) {
-    return size() > that.size(); 
-  }
+    default void move() {
+        getPos().move(getVelocity());
+    }
+
+    default double size() {
+        return getWidth() * getHeight();
+    }
+
+    default boolean isLargerThan(GameObject<?> that) {
+        return size() > that.size();
+    }
 
 }
 

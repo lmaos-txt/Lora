@@ -13,7 +13,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	public Lora() {
 		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
-			400,400);
+			640,640);
 
 		lora = (Player<I>) getPlayer();
 		File resFolder = new File("src/res");
