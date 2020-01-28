@@ -6,6 +6,7 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     protected I img;
     protected boolean changed = true;
     String imageFileName;
+    Rect collisionBounds;
 
     public ImageObject(String imageFileName) {
         super(0, 0);
@@ -48,9 +49,12 @@ public class ImageObject<I> extends AbstractGameObject<I> {
         }
         if (null != img) g.drawImage(img, getPos().x, getPos().y);
     }
-
-    public void animate(I image) {
-        img = image;
+    void setCollisionBounds(Rect toSet){
+        collisionBounds = toSet;
+    }
+    void setCollisionBounds(Vertex p1, Vertex p2){
+        collisionBounds.p1 = p1;
+        collisionBounds.p2 = p2;
     }
 }
 

@@ -13,14 +13,13 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	public Lora() {
 		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
-			640,640);
-
+				640,640);
 		lora = (Player<I>) getPlayer();
 		File resFolder = new File("src/res");
 		List<ImageObject<I>> tmp = new ArrayList<>();
 		getGOss().add(tmp);
 		MapObject<I> map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
-			new Vertex(0,0));
+				new Vertex(0,0));
 
 		List<MapObject<I>> mapObjects = new ArrayList<>();
 		mapObjects.add(map);
@@ -31,6 +30,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	@Override
 	public void doChecks() {
 		getPlayer().move();
+		collisionCheck();
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 					break;
 				case VK_S:
 					if(getPlayer().getVelocity().y != 3)
-					getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y +3));
+						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y +3));
 					lora.setFacing(new Vertex(0,1));
 					break;
 				case VK_D:
@@ -95,5 +95,8 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	@Override
 	public void playSounds(SoundTool<S> soundTool) {
 
+	}
+	private void collisionCheck() {
+		/*gets array list od arrayLists*/getGOss();
 	}
 }

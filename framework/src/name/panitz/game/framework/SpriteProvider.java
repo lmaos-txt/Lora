@@ -30,4 +30,8 @@ public class SpriteProvider<I> extends ImageObject<I> {
     public I getImage() {
         return super.img;
     }
+
+    public void setCollisionBound(Rect set){
+        super.setCollisionBounds(set);
+    }
 }

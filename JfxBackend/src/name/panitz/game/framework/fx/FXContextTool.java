@@ -9,6 +9,7 @@ import name.panitz.game.framework.GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
+import name.panitz.game.framework.RectVal;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -117,9 +118,8 @@ public class FXContextTool implements GraphicsTool<Image> {
         File[] listOfFiles = resFolder.listFiles();
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            spriteList.add(new Sprite(listOfFiles[i].toString().substring(4),
-                    listOfFiles[i].toString().substring(16).substring(0, listOfFiles[i].toString().substring(16).length() - 4)
-                    , g));
+            String tag = listOfFiles[i].toString().substring(16).substring(0, listOfFiles[i].toString().substring(16).length() - 4);
+            spriteList.add(new Sprite(listOfFiles[i].toString().substring(4),tag, g, RectVal.getCollision(tag)));
         }
 
     }
