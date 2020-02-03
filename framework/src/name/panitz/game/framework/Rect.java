@@ -4,9 +4,9 @@ public class Rect {
     Vertex p1;
     Vertex p2;
 
-    public Rect(Vertex vertex) {
-        p1 = vertex;
-        p2 = vertex;
+    public Rect(Vertex vertex1, Vertex vertex2) {
+        p1 = vertex1;
+        p2 = vertex2;
     }
 
     double getWidth(){
