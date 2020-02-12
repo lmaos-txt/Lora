@@ -2,6 +2,8 @@ package name.panitz.game.framework.fx;
 
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.transform.Transform;
 import name.panitz.game.framework.GraphicsTool;
@@ -9,6 +11,7 @@ import name.panitz.game.framework.GameObject;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
+import name.panitz.game.framework.Rect;
 import name.panitz.game.framework.RectVal;
 
 import javax.imageio.ImageIO;
@@ -77,6 +80,22 @@ public class FXContextTool implements GraphicsTool<Image> {
     }
 
     @Override
+    public Image generateImage(String name, GameObject<Image> go, int scaleFactor, Rect imgRect) {
+        Image fullImage = new Image(getClass().getClassLoader().getResourceAsStream(name), 16 * scaleFactor,
+                16 * scaleFactor, true, true);
+        PixelReader pr = fullImage.getPixelReader();
+        PixelWriter pw = null;
+        WritableImage wImg = new WritableImage((int) imgRect.getWidth(),(int) imgRect.getHeight());
+        for (int y = 0; y < wImg.getHeight(); y++) {
+            for (int x = 0; x < wImg.getWidth(); x++) {
+                pw.setColor((int) imgRect.getP1().x + x,(int) imgRect.getP1().y + y,
+                        pr.getColor((int) imgRect.getP1().x + x,(int) imgRect.getP1().y + y ));
+            }
+        }
+        return  wImg;
+    }
+
+    @Override
     public Image generateMap(String URL, GameObject<Image> go) {
         try {
             File resFolder = new File(URL);
@@ -116,10 +135,28 @@ public class FXContextTool implements GraphicsTool<Image> {
         spriteList = new ArrayList<>();
         File resFolder = new File("src/res/sprites");
         File[] listOfFiles = resFolder.listFiles();
-
+        List<File> fileArray = new ArrayList<>();
         for (int i = 0; i < listOfFiles.length; i++) {
-            String tag = listOfFiles[i].toString().substring(16).substring(0, listOfFiles[i].toString().substring(16).length() - 4);
-            spriteList.add(new Sprite(listOfFiles[i].toString().substring(4),tag, g, RectVal.getCollision(tag)));
+            spriteList.add(new Sprite(listOfFiles[i].toString().substring(4),
+                    listOfFiles[i].toString().substring(16).substring(0, listOfFiles[i].toString().substring(16).length() - 4)
+                    , g));
+//            if(listOfFiles[i].toString().contains("Grid")&&listOfFiles[i].toString().contains(".png")){
+//                fileArray.add(listOfFiles[i]);
+//
+//            }
+//        }
+//
+//
+//
+//        for (int i = 0; i < fileArray.size(); i++) {
+//            String tag = fileArray.get(i).toString().substring(16).substring(0, fileArray.get(i).toString().substring(16).length() - 4);
+//            List<Rect> curIGrid = RectVal.getImages(tag);
+//            List<Rect> curCGrid = RectVal.getCollision(tag);
+//            List<String> curTGrid = RectVal.getText(tag);
+//
+//            for (int j = 0; j < curIGrid.size(); j++) {
+//                spriteList.add(new Sprite("res/sprites/"+ tag +".png",curTGrid.get(j),g,curCGrid.get(j),curIGrid.get(j)));
+//            }
         }
 
     }
@@ -136,7 +173,7 @@ public class FXContextTool implements GraphicsTool<Image> {
 
     private Image getImage(Color c) {
         if (c.equals(new Color(0, 255, 0)))
-            return getSprite(spriteList, "grass");
+            return getSprite(spriteList, "grass2");
         if (c.equals(new Color(0, 0, 255)))
             return getSprite(spriteList, "water");
         if (c.equals(new Color(255, 0, 255)))

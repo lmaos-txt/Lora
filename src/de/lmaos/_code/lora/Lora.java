@@ -97,6 +97,6 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	}
 	private void collisionCheck() {
-		/*gets array list od arrayLists*/getGOss();
+		/*gets array list of arrayLists*/getGOss();
 	}
 }

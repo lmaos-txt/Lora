@@ -1,5 +1,7 @@
 package name.panitz.game.framework;
 
+import java.util.List;
+
 public class SpriteProvider<I> extends ImageObject<I> {
     String tag;
 

@@ -1,0 +1,4 @@
+TODO collision
+TODO create story
+TODO Animations
+TODO finish sprites

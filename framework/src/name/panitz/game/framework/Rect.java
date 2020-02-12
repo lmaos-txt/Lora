@@ -9,10 +9,16 @@ public class Rect {
         p2 = vertex2;
     }
 
-    double getWidth(){
+    public double getWidth(){
         return Math.abs((p1.x - p2.x));
     }
-    double getHeight(){
+    public double getHeight(){
         return Math.abs((p1.x - p2.y));
+    }
+    public Vertex getP1() {
+        return p1;
+    }
+    public Vertex getP2() {
+        return p2;
     }
 }

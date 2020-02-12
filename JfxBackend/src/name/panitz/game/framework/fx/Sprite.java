@@ -6,11 +6,13 @@ import name.panitz.game.framework.SpriteProvider;
 import name.panitz.game.framework.Vertex;
 import javafx.scene.image.*;
 
+import java.util.List;
+
 public class Sprite extends SpriteProvider<Image> {
-    public Sprite(String imageFileName, String tag, GraphicsTool<Image> g, Rect CollisionR) {
+    public Sprite(String imageFileName, String tag, GraphicsTool<Image> g, Rect CollisionR, Rect ImgR) {
         super(imageFileName);
         super.setTag(tag);
-        super.initializeImage(g);
+        super.initializeSubImage(g, ImgR);
         super.setCollisionBound(CollisionR);
     }
 
@@ -18,7 +20,8 @@ public class Sprite extends SpriteProvider<Image> {
         super(imageFileName);
         super.setTag(tag);
         super.initializeImage(g);
-        super.setCollisionBound(new Rect(new Vertex(0,0)));
+        //TODO Some List creation for std Collision
+        //super.setCollisionBound(new Rect(new Vertex(0,0),new Vertex(64,64)));
     }
 
     public Sprite(String imageFileName, Vertex pos, Vertex motion) {

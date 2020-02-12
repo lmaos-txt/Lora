@@ -1,5 +1,7 @@
 package name.panitz.game.framework;
 
+import java.util.List;
+
 public class ImageObject<I> extends AbstractGameObject<I> {
 
     public int ImageScaleFactor = 4;
@@ -40,6 +42,9 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     public void initializeImage(GraphicsTool<I> g) {
         img = g.generateImage(imageFileName, this, ImageScaleFactor);
     }
+    public void initializeSubImage(GraphicsTool<I> g, Rect ImgR) {
+        img = g.generateImage(imageFileName, this, ImageScaleFactor, ImgR);
+    }
 
     @Override
     public void paintTo(GraphicsTool<I> g) {
@@ -52,9 +57,9 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     void setCollisionBounds(Rect toSet){
         collisionBounds = toSet;
     }
-    void setCollisionBounds(Vertex p1, Vertex p2){
+    /*void setCollisionBounds(Vertex p1, Vertex p2){
         collisionBounds.p1 = p1;
         collisionBounds.p2 = p2;
-    }
+    }*/
 }
 

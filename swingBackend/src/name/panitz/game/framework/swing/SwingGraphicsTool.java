@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 import name.panitz.game.framework.GraphicsTool;
 import name.panitz.game.framework.GameObject;
+import name.panitz.game.framework.Rect;
 import name.panitz.game.framework.fx.Sprite;
 
 public class SwingGraphicsTool implements GraphicsTool<Image> {
@@ -67,6 +68,12 @@ public class SwingGraphicsTool implements GraphicsTool<Image> {
         go.setWidth(image.getIconWidth());
         go.setHeight(image.getIconHeight());
         return image.getImage();
+    }
+
+    @Override
+    public Image generateImage(String name, GameObject<Image> go, int ScaleFactor, Rect imgRect) {
+        return null;
+        //TODO Spritemap Genaration
     }
 
     @Override
