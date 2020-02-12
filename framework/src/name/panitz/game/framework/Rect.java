@@ -13,7 +13,7 @@ public class Rect {
         return Math.abs((p1.x - p2.x));
     }
     public double getHeight(){
-        return Math.abs((p1.x - p2.y));
+        return Math.abs((p1.y - p2.y));
     }
     public Vertex getP1() {
         return p1;

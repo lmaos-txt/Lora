@@ -30,7 +30,7 @@ public class RectVal {
 	public static final List<Rect> spriteGrid1I = Collections.unmodifiableList( //TODO Image Sprite Grid
 			new ArrayList<>() {{
 				for (int y = 0; y < 8; y++) {
-					for (int x = 0; x < 8; x++) {
+					for (int x = 0; x < 6; x++) {
 						add(new Rect(new Vertex(x*32,0),new Vertex((x+1)*32,32)));
 					}
 				}
@@ -40,8 +40,8 @@ public class RectVal {
 
 	public static final List<Rect> spriteGrid1C = Collections.unmodifiableList(//TODO Collision Sprite Grid
 			new ArrayList<>() {{
-				for (int i = 0; i < 7; i++) {
-					add(new Rect(new Vertex(i*16,0),new Vertex((i+1)*16,16)));
+				for (int i = 0; i < 6; i++) {
+					add(new Rect(new Vertex(i*32,0),new Vertex((i+1)*32,32)));
 				}
 			}}
 	);
