@@ -1,6 +1,12 @@
 package name.panitz.game.framework;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapObject<I> extends ImageObject<I> {
+
+    List<MapEntity> layerMap = new ArrayList<>();
+
     public MapObject(String imageFileName) {
         super(imageFileName);
     }
@@ -20,7 +26,7 @@ public class MapObject<I> extends ImageObject<I> {
     @Override
     public void paintTo(GraphicsTool<I> g) {
         if (changed) {
-            img = g.generateMap(super.imageFileName, this);
+            img = g.generateMap(super.imageFileName, this, layerMap);
             changed = false;
         }
         if (null != img) g.drawImage(img, getPos().x, getPos().y);

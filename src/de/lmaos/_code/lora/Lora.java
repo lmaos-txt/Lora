@@ -15,12 +15,8 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
 				640,640);
 		lora = (Player<I>) getPlayer();
-		File resFolder = new File("src/res");
-		List<ImageObject<I>> tmp = new ArrayList<>();
-		getGOss().add(tmp);
 		MapObject<I> map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
 				new Vertex(0,0));
-
 		List<MapObject<I>> mapObjects = new ArrayList<>();
 		mapObjects.add(map);
 		getGOss().add(mapObjects);
@@ -96,6 +92,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	public void playSounds(SoundTool<S> soundTool) {
 
 	}
+
 	private void collisionCheck() {
 		/*gets array list of arrayLists*/getGOss();
 	}

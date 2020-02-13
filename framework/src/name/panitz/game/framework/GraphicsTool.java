@@ -1,5 +1,7 @@
 package name.panitz.game.framework;
 
+import java.util.List;
+
 public interface GraphicsTool<I> {
     void drawImage(I img, double x, double y);
 
@@ -40,6 +42,6 @@ public interface GraphicsTool<I> {
 
     I generateImage(String name, GameObject<I> go, int ScaleFactor, Rect imgRect);
 
-    I generateMap(String URL, GameObject<I> go);
+    I generateMap(String URL, GameObject<I> go, List<MapEntity> layerMap);
 }
 

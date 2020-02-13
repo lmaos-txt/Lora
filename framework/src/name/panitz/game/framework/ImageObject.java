@@ -57,9 +57,6 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     void setCollisionBounds(Rect toSet){
         collisionBounds = toSet;
     }
-    /*void setCollisionBounds(Vertex p1, Vertex p2){
-        collisionBounds.p1 = p1;
-        collisionBounds.p2 = p2;
-    }*/
+
 }
 

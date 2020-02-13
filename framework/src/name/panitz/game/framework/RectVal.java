@@ -27,6 +27,15 @@ public class RectVal {
 			return playerGridT;
 		return null;
 	}
+
+//	public static int getSpriteID(Color tag) {
+//		if(tag.equals("spriteGrid1"))
+//			return spriteGrid1T;
+//		if(tag.equals("Player"))
+//			return playerGridT;
+//		return null;
+//	}
+
 	public static final List<Rect> spriteGrid1I = Collections.unmodifiableList( //TODO Image Sprite Grid
 			new ArrayList<>() {{
 				for (int y = 0; y < 8; y++) {

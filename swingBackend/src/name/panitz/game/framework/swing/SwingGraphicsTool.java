@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 import name.panitz.game.framework.GraphicsTool;
 import name.panitz.game.framework.GameObject;
+import name.panitz.game.framework.MapEntity;
 import name.panitz.game.framework.Rect;
 import name.panitz.game.framework.fx.Sprite;
 
@@ -77,7 +78,7 @@ public class SwingGraphicsTool implements GraphicsTool<Image> {
     }
 
     @Override
-    public Image generateMap(String URL, GameObject<Image> go) {
+    public Image generateMap(String URL, GameObject<Image> go, List<MapEntity> layerMap) {
         //TODO Generate Map
         return null;
     }
