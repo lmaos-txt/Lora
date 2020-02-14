@@ -112,8 +112,8 @@ public class FXContextTool implements GraphicsTool<Image> {
 			GraphicsContext gc = c.getGraphicsContext2D();
 			c.setWidth(buff.getWidth() * 64);//TBD
 			c.setHeight(buff.getHeight() * 64);
-			Pattern ptrn = Pattern.compile("(?<=layer)([0-9])");
-			Matcher match ;
+			Pattern ptrn = Pattern.compile("(?<=layer)\\d\\.\\d|(?<=layer)\\d");
+			Matcher match;
 			for (int i = 0; i < listOfFiles.length; i++) {
 				if (listOfFiles[i].toString().contains("layer"))
 					fileArray.add(new File(listOfFiles[i].toString()));
@@ -125,9 +125,13 @@ public class FXContextTool implements GraphicsTool<Image> {
 					for (int x = 0; x < buff.getWidth(); x++) {
 						Color tmpC = new Color(buff.getRGB(x, y));
 						gc.drawImage(getImage(tmpC), x * 64, y * 64);
-						System.out.println(fileArray.get(i));
 						match = ptrn.matcher(fileArray.get(i).toString());
-//						layerMap.add(new MapEntity(x*64, y*64, (double) fileArray.get(i).toString().substring(),));
+						if(match.find()&& ! tmpC.equals(new Color(255,255,255))) {
+							layerMap.add(new MapEntity(x * 64, y * 64, Double.parseDouble(match.group(0)),
+									RectVal.getSpriteID(tmpC), getImageColR(tmpC)));
+//							System.out.println(Double.parseDouble(match.group(0)));
+						}
+
 					}
 				}
 			}
@@ -164,8 +168,8 @@ public class FXContextTool implements GraphicsTool<Image> {
 						curCGrid.get(j), curIGrid.get(j)));
 			}
 		}
-
 	}
+
 	int tripleMin(int one, int two, int three){
 		int min = one ;
 		if(two < min) min = two;
@@ -196,6 +200,28 @@ public class FXContextTool implements GraphicsTool<Image> {
 		if (c.equals(new Color(255, 255, 255)))
 			return null;
 		return null;
+	}
+	private Rect getImageColR(Color c) {
+		String tag = "";
+		if (c.equals(new Color(0, 255, 0)))
+			tag = "grass";
+		if (c.equals(new Color(0, 0, 255)))
+			tag=  "water";
+		if (c.equals(new Color(255, 0, 255)))
+			tag = "stone";
+		if (c.equals(new Color(255, 0, 0)))
+			tag = "path";
+		if (c.equals(new Color(46, 46, 46)))
+			tag = "cauldron";
+		if (c.equals(new Color(255, 255, 255)))
+			return new Rect(new Vertex(0,0),new Vertex(0,0));
+
+		List<String> tmpL= RectVal.getText("spriteGrid1");
+		for (int i = 0; i < tmpL.size(); i++) {
+			if(tag.equals(tmpL.get(i)))
+				return RectVal.getCollision("spriteGrid1").get(i);
+		}
+		return new Rect(new Vertex(0,0),new Vertex(0,0));
 	}
 	//Proudly sponsored By StackOverflow
 	public static WritableImage pixelScaleAwareCanvasSnapshot(Canvas canvas, double pixelScale) {

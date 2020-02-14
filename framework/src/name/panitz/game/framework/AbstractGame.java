@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public abstract class AbstractGame<I, S> implements GameLogic<I, S> {
     protected List<List<? extends GameObject<I>>> goss = new ArrayList<>();
+
     protected List<Button> buttons = new ArrayList<>();
     protected List<SoundObject<S>> soundsToPlays = new ArrayList<>();
     protected GameObject<I> player;
@@ -75,6 +76,8 @@ public abstract class AbstractGame<I, S> implements GameLogic<I, S> {
     @Override
     public void keyReleasedReaction(KeyCode keycode) {
     }
+
+
 
 }
 

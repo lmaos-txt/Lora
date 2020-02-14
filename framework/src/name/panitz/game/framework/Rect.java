@@ -21,4 +21,44 @@ public class Rect {
     public Vertex getP2() {
         return p2;
     }
+    public boolean touches(Rect that, int xPosThis, int yPosThis, int xPosThat, int yPosThat){
+        return (!isAbove(that,yPosThis,yPosThat) && !isBelow(that, yPosThis, yPosThat) ||
+                (!isLeftOf(that, xPosThis, xPosThat) && !isRightOf(that,xPosThis, xPosThat)));
+    }
+    public boolean touches(Rect that){
+        return (!isAbove(that) && !isBelow(that) || (!isLeftOf(that) && !isRightOf(that)));
+    }
+    public boolean isLeftOf (Rect that){
+        return that.p1.x + that.getWidth() < p1.x + getWidth();
+    }
+    public boolean isRightOf (Rect that){
+        return that.p1.x + that.getWidth() > p1.x + getWidth();
+    }
+    public boolean isAbove (Rect that){
+        return that.p1.y + that.getHeight() < p1.y + getHeight();
+    }
+    public boolean isBelow (Rect that){
+        return that.p1.y + that.getHeight() > p1.y + getHeight();
+    }
+
+    public boolean isLeftOf (Rect that, int xPosThis, int xPosThat){
+        return that.p1.x+ xPosThat + that.getWidth() < p1.x + xPosThis + getWidth();
+    }
+    public boolean isRightOf (Rect that,int xPosThis, int xPosThat){
+        return  that.p1.x+ xPosThat + that.getWidth() > p1.x + xPosThis + getWidth();
+    }
+    public boolean isAbove (Rect that, int yPosThis, int yPosThat){
+        return that.p1.y+ yPosThat + that.getHeight() < p1.y+ yPosThis + getHeight();
+    }
+    public boolean isBelow (Rect that, int yPosThis, int yPosThat){
+        return that.p1.y+ yPosThat + that.getHeight() > p1.y+ yPosThis + getHeight();
+    }
+
+    @Override
+    public String toString() {
+        return "Rect{" +
+                " p1=" + p1 +
+                " p2=" + p2 +
+                '}';
+    }
 }

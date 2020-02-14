@@ -14,4 +14,35 @@ public class MapEntity {
 		spriteID = spriteIDNum;
 		collisionRect = colR;
 	}
+
+	public int getX_pos() {
+		return x_pos;
+	}
+
+	public int getY_pos() {
+		return y_pos;
+	}
+
+	public double getLayer() {
+		return layer;
+	}
+
+	public int getSpriteID() {
+		return spriteID;
+	}
+
+	public Rect getCollisionRect() {
+		return collisionRect;
+	}
+
+	@Override
+	public String toString() {
+		return "MapEntity{" +
+				"\nx_pos = " + x_pos +
+				"\ny_pos = " + y_pos +
+				"\nlayer = " + layer +
+				"\nspriteID = " + spriteID +
+				"\ncollisionRect = " + collisionRect +
+				'}';
+	}
 }

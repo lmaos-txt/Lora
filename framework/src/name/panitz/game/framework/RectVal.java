@@ -1,11 +1,12 @@
 package name.panitz.game.framework;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RectVal {
-
+	final static  int  scaleFactor = 2;
 	public static List<Rect> getCollision(String tag) {
 		if(tag.equals("spriteGrid1"))
 			return spriteGrid1C;
@@ -28,13 +29,21 @@ public class RectVal {
 		return null;
 	}
 
-//	public static int getSpriteID(Color tag) {
-//		if(tag.equals("spriteGrid1"))
-//			return spriteGrid1T;
-//		if(tag.equals("Player"))
-//			return playerGridT;
-//		return null;
-//	}
+	public static int getSpriteID(Color c) {
+		if (c.equals(new Color(0, 255, 0)))
+			return 0;
+		if (c.equals(new Color(0, 0, 255)))
+			return 1;
+		if (c.equals(new Color(255, 0, 255)))
+			return 2;
+		if (c.equals(new Color(255, 0, 0)))
+			return 3;
+		if (c.equals(new Color(46, 46, 46)))
+			return 4;
+		if (c.equals(new Color(255, 255, 255)))
+			return -1;
+		return -1;
+	}
 
 	public static final List<Rect> spriteGrid1I = Collections.unmodifiableList( //TODO Image Sprite Grid
 			new ArrayList<>() {{
@@ -50,7 +59,7 @@ public class RectVal {
 	public static final List<Rect> spriteGrid1C = Collections.unmodifiableList(//TODO Collision Sprite Grid
 			new ArrayList<>() {{
 				for (int i = 0; i < 6; i++) {
-					add(new Rect(new Vertex(i*32,0),new Vertex((i+1)*32,32)));
+					add(new Rect(new Vertex(0,0),new Vertex((32 * scaleFactor),32 * scaleFactor)));
 				}
 			}}
 	);

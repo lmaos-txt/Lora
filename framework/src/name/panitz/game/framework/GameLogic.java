@@ -51,5 +51,7 @@ public interface GameLogic<I, S> extends Movable, Paintable<I> {
     void start();
 
     void pause();
+
+    void setupPlayer();
 }
 

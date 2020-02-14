@@ -13,6 +13,8 @@ public interface GameObject<I> extends Movable, Paintable<I> {
 
     Vertex getPos();
 
+    void setPos(Vertex Positon);
+
     Vertex getVelocity();
 
     void setVelocity(Vertex v);

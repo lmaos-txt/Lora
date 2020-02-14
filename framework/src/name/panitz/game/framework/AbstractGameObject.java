@@ -46,6 +46,11 @@ public abstract class AbstractGameObject<I> implements GameObject<I> {
     }
 
     @Override
+    public void setPos(Vertex position) {
+        this.position = position;
+    }
+
+    @Override
     public Vertex getPos() {
         return position;
     }

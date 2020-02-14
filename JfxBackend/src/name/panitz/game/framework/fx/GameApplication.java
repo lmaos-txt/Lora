@@ -33,7 +33,7 @@ public class GameApplication extends Application {
             fp.getChildren().add(fxbutton);
         }
         bp.setBottom(fp);
-        stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         stage.setScene(new Scene(bp));
         stage.show();
     }
