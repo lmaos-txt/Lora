@@ -22,8 +22,9 @@ public class Rect {
         return p2;
     }
     public boolean touches(Rect that, int xPosThis, int yPosThis, int xPosThat, int yPosThat){
-        return (!isAbove(that,yPosThis,yPosThat) && !isBelow(that, yPosThis, yPosThat) ||
-                (!isLeftOf(that, xPosThis, xPosThat) && !isRightOf(that,xPosThis, xPosThat)));
+        if((Math.abs(xPosThat - xPosThis)>64&&(Math.abs(yPosThat - yPosThis) > 64))) return false;
+
+        return true;
     }
     public boolean touches(Rect that){
         return (!isAbove(that) && !isBelow(that) || (!isLeftOf(that) && !isRightOf(that)));
@@ -42,16 +43,16 @@ public class Rect {
     }
 
     public boolean isLeftOf (Rect that, int xPosThis, int xPosThat){
-        return that.p1.x+ xPosThat + that.getWidth() < p1.x + xPosThis + getWidth();
+        return that.p1.x+ xPosThat > p1.x + xPosThis + getWidth();
     }
     public boolean isRightOf (Rect that,int xPosThis, int xPosThat){
-        return  that.p1.x+ xPosThat + that.getWidth() > p1.x + xPosThis + getWidth();
+        return  that.p1.x+ xPosThat + that.getWidth() < p1.x + xPosThis ;
     }
     public boolean isAbove (Rect that, int yPosThis, int yPosThat){
-        return that.p1.y+ yPosThat + that.getHeight() < p1.y+ yPosThis + getHeight();
+        return that.p1.y+ yPosThat > p1.y+ yPosThis + getHeight() ;
     }
     public boolean isBelow (Rect that, int yPosThis, int yPosThat){
-        return that.p1.y+ yPosThat + that.getHeight() > p1.y+ yPosThis + getHeight();
+        return that.p1.y+ yPosThat + that.getHeight() < p1.y+ yPosThis ;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
 				640,640);
 		lora = (Player<I>) getPlayer();
-		map = new MapObject<>("src\\res\\maps\\map3", new Vertex(0,0),
+		map = new MapObject<>("src\\res\\maps\\map4", new Vertex(0,0),
 				new Vertex(0,0));
 		List<MapObject<I>> mapObjects = new ArrayList<>();
 		mapObjects.add(map);
@@ -96,13 +96,15 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 				case VK_R:
 					lora.setPos(new Vertex(0,0));
 					break;
+				case LEFT_ARROW:
+					lora.setPos(new Vertex(lora.getPos().x-1,lora.getPos().y));
 			}
 		}
 	}
 
 	@Override
 	public void setupPlayer() {
-		lora.setLayer(map.getEntityAt(lora.getPos()).getLayer());
+		lora.setLayer(map.getEntityAt(lora.getPos()).getLayer() + 1);
 		lora.setColR(new Rect(new Vertex(8,4),new Vertex(32,33)));
 	}
 
@@ -127,16 +129,16 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 			if(map.getLayerMap().get(i).getLayer() < lora.getLayer())
 				continue;
 			if(map.getLayerMap().get(i).getLayer() >= lora.getLayer()){
-				if( !(map.getLayerMap().get(i).getX_pos() < lora.getPos().x - 200 &&
-						map.getLayerMap().get(i).getX_pos() > lora.getPos().x + 200 &&
-						map.getLayerMap().get(i).getY_pos() > lora.getPos().y + 200 &&
-						map.getLayerMap().get(i).getY_pos() < lora.getPos().y - 200)){
+				if( map.getLayerMap().get(i).getX_pos() > lora.getPos().x - 192 &&
+						map.getLayerMap().get(i).getX_pos() < lora.getPos().x + 192 &&
+						map.getLayerMap().get(i).getY_pos() < lora.getPos().y + 192 &&
+						map.getLayerMap().get(i).getY_pos() > lora.getPos().y - 192){
 					//could collide
-					if(map.getLayerMap().get(i).getCollisionRect().touches(lora.getColR(),
-							map.getLayerMap().get(i).getX_pos(),map.getLayerMap().get(i).getY_pos(),
-							(int) lora.getPos().x,(int) lora.getPos().y)){
+					if(lora.getColR().touches(map.getLayerMap().get(i).getCollisionRect(),(int)lora.getPos().x,(int)lora.getPos().y,map.getLayerMap().get(i).getX_pos(),map.getLayerMap().get(i).getY_pos())){
 						System.out.println("Lora Touches:"+ map.getLayerMap().get(i)+"\n and is at: " + lora.getPos() + "\n"+lora.getColR()+"-----------------\n");
-						lora.setVelocity(new Vertex(lora.getVelocity().x*-1,lora.getVelocity().y*-1));
+						if(lora.getColR().isAbove(map.getLayerMap().get(i).getCollisionRect(),(int)lora.getPos().y,map.getLayerMap().get(i).getY_pos())){
+							System.out.println("__________________________Above_________________________");
+						}
 					}
 //					System.out.println("Position: " + map.getLayerMap().get(i).getX_pos() +"\n  "+ (lora.getPos().x - 195));
 //					lora.setPos(new Vertex(0,0));
