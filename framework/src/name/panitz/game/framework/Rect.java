@@ -22,8 +22,10 @@ public class Rect {
         return p2;
     }
     public boolean touches(Rect that, int xPosThis, int yPosThis, int xPosThat, int yPosThat){
-        if((Math.abs(xPosThat - xPosThis)>64&&(Math.abs(yPosThat - yPosThis) > 64))) return false;
-        if();
+        if(isLeftOf(that,xPosThis,xPosThat)) return false;
+        if(isRightOf(that,xPosThis,xPosThat)) return false;
+        if(isBelow(that,yPosThis,yPosThat)) return false;
+        if(isAbove(that,yPosThis,yPosThat)) return false;
         return true;
     }
     public boolean touches(Rect that){
