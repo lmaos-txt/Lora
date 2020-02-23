@@ -23,7 +23,7 @@ public class Rect {
     }
     public boolean touches(Rect that, int xPosThis, int yPosThis, int xPosThat, int yPosThat){
         if((Math.abs(xPosThat - xPosThis)>64&&(Math.abs(yPosThat - yPosThis) > 64))) return false;
-
+        if();
         return true;
     }
     public boolean touches(Rect that){

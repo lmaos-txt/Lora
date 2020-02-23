@@ -14,7 +14,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 
 	public Lora() {
-		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
+		super(new Player<>("res/sprites/lora standing front debug.png", new Vertex(0,0)),
 				640,640);
 		lora = (Player<I>) getPlayer();
 		map = new MapObject<>("src\\res\\maps\\map4", new Vertex(0,0),
@@ -98,6 +98,16 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 					break;
 				case LEFT_ARROW:
 					lora.setPos(new Vertex(lora.getPos().x-1,lora.getPos().y));
+					break;
+				case RIGHT_ARROW:
+					lora.setPos(new Vertex(lora.getPos().x+1,lora.getPos().y));
+					break;
+				case UP_ARROW:
+					lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-1));
+					break;
+				case DOWN_ARROW:
+					lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y+1));
+					break;
 			}
 		}
 	}
