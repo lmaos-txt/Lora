@@ -129,7 +129,6 @@ public class FXContextTool implements GraphicsTool<Image> {
 						if(match.find()&& ! tmpC.equals(new Color(255,255,255))) {
 							layerMap.add(new MapEntity(x * 64, y * 64, Double.parseDouble(match.group(0)),
 									RectVal.getSpriteID(tmpC), getImageColR(tmpC)));
-//							System.out.println(Double.parseDouble(match.group(0)));
 						}
 
 					}

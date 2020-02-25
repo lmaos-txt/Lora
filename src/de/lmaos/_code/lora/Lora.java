@@ -63,24 +63,23 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		if(null != keyCode){
 			switch (keyCode){
 				case VK_W:
-					if(getPlayer().getVelocity().y <=0){
+					if(getPlayer().getVelocity().y <0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y + 3));
 					}
 					break;
 				case VK_A:
-					if(getPlayer().getVelocity().x <=0){
+					if(getPlayer().getVelocity().x <0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
-						System.out.println("A released");
 					}
 					break;
 				case VK_S:
-					if(getPlayer().getVelocity().y >=0){
+					if(getPlayer().getVelocity().y >0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
 					}
 					break;
 
 				case VK_D:
-					if(getPlayer().getVelocity().x >=0){
+					if(getPlayer().getVelocity().x >0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
 					}
 					break;
@@ -145,12 +144,23 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 						map.getLayerMap().get(i).getY_pos() > lora.getPos().y - 192){
 					//could collide
 					if(lora.getColR().touches(map.getLayerMap().get(i).getCollisionRect(),(int)lora.getPos().x,(int)lora.getPos().y,map.getLayerMap().get(i).getX_pos(),map.getLayerMap().get(i).getY_pos())){
-						//System.out.println("Lora Touches:"+ map.getLayerMap().get(i)+"\n and is at: " + lora.getPos() + "\n"+lora.getColR()+"-----------------\n");
-						//Is colliding
-						Vertex dir = new Vertex(Math.signum(lora.getPos().x - map.getLayerMap().get(i).getX_pos()),
-												Math.signum(map.getLayerMap().get(i).getY_pos() - lora.getPos().y));
-						System.out.println(dir);
-						lora.setVelocity(new Vertex(lora.getVelocity().x* dir.x, lora.getVelocity().y * dir.y));
+//						lora.setVelocity(new Vertex(lora.getVelocity().x* dir.x, lora.getVelocity().y * dir.y));
+						if(lora.getPos().y < map.getLayerMap().get(i).getY_pos() && lora.getVelocity().y > 0){
+							lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
+							lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-3));
+						}
+						if(lora.getPos().y > map.getLayerMap().get(i).getY_pos() && lora.getVelocity().y < 0){
+							lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
+							lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y+3));
+						}
+						if(lora.getPos().x < map.getLayerMap().get(i).getX_pos() && lora.getVelocity().x > 0){
+							lora.setVelocity(new Vertex(0, lora.getVelocity().y));
+							lora.setPos(new Vertex(lora.getPos().x-3,lora.getPos().y));
+						}
+						if(lora.getPos().x > map.getLayerMap().get(i).getX_pos() && lora.getVelocity().x < 0){
+							lora.setVelocity(new Vertex(0, lora.getVelocity().y));
+							lora.setPos(new Vertex(lora.getPos().x+3,lora.getPos().y));
+						}
 
 					}
 //					System.out.println("Position: " + map.getLayerMap().get(i).getX_pos() +"\n  "+ (lora.getPos().x - 195));

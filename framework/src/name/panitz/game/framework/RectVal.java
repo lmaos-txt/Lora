@@ -52,15 +52,17 @@ public class RectVal {
 						add(new Rect(new Vertex(x*32,0),new Vertex((x+1)*32,32)));
 					}
 				}
-
 			}}
 	);
 
 	public static final List<Rect> spriteGrid1C = Collections.unmodifiableList(//TODO Collision Sprite Grid
 			new ArrayList<>() {{
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 5; i++) {
 					add(new Rect(new Vertex(0,0),new Vertex((32 * scaleFactor),32 * scaleFactor)));
 				}
+				add(new Rect(new Vertex(6 * scaleFactor,5 * scaleFactor), new Vertex(26 * scaleFactor,29 *scaleFactor)));
+//				add(new Rect(new Vertex(0,0),new Vertex((32 * scaleFactor),32 * scaleFactor)));
+
 			}}
 	);
 
