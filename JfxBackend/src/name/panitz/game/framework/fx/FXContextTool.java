@@ -130,7 +130,6 @@ public class FXContextTool implements GraphicsTool<Image> {
 							layerMap.add(new MapEntity(x * 64, y * 64, Double.parseDouble(match.group(0)),
 									RectVal.getSpriteID(tmpC), getImageColR(tmpC)));
 						}
-
 					}
 				}
 			}

@@ -2,7 +2,6 @@ package name.panitz.game.framework;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MapObject<I> extends ImageObject<I> {
 
@@ -44,5 +43,22 @@ public class MapObject<I> extends ImageObject<I> {
                     tmp.layer < layerMap.get(i).layer) tmp = layerMap.get(i);
         }
         return tmp;
+    }
+
+    @Override
+    public double getHeight() {
+        int maxHeight = 0;
+        for (int i = layerMap.size() - 1; i > 0 ; i--) {
+            if(layerMap.get(i).getY_pos()> maxHeight) maxHeight = layerMap.get(i).getY_pos();
+        }
+        return maxHeight + 64;
+    }
+
+    public double getWidth() {
+        int maxWidth = 0;
+        for (int i = layerMap.size() - 1; i > 0 ; i--) {
+            if(layerMap.get(i).getX_pos() > maxWidth) maxWidth = layerMap.get(i).getY_pos();
+        }
+        return maxWidth + 64;
     }
 }

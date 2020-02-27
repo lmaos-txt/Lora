@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class AbstractGame<I, S> implements GameLogic<I, S> {
+
     protected List<List<? extends GameObject<I>>> goss = new ArrayList<>();
 
     protected List<Button> buttons = new ArrayList<>();
@@ -66,7 +67,6 @@ public abstract class AbstractGame<I, S> implements GameLogic<I, S> {
     @Override
     public void pause() {
         isStopped = true;
-
     }
 
     @Override

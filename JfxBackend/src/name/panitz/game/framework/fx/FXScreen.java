@@ -58,12 +58,12 @@ public class FXScreen extends Canvas {
                 GraphicsContext gc = getGraphicsContext2D();
                 setHeight(getScene().getWindow().getHeight());
                 setWidth(getScene().getWindow().getWidth());
+                logic.updateScreenSize(getScene().getWindow().getWidth(),getScene().getWindow().getHeight());
                 gc.clearRect(0, 0, getWidth(), getHeight());
+                gc.translate(logic.moveField(false),logic.moveField(true) );
                 logic.paintTo(new FXContextTool(gc));
                 lastUpdate = now;
             }
-
-
             for (SoundObject<AudioInputStream> so : logic.getSoundsToPlayOnce()) {
                 so.playSound(soundTool);
             }

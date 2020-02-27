@@ -11,13 +11,15 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	Player<I> lora;
 	MapObject<I> map;
+	double viewportX;
+	double viewportY;
 
 
 	public Lora() {
-		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
+		super(new Player<>("res/sprites/lora standing front.png", new Vertex(600,600)),
 				640,640);
 		lora = (Player<I>) getPlayer();
-		map = new MapObject<>("src\\res\\maps\\map3", new Vertex(0,0),
+		map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
 				new Vertex(0,0));
 		List<MapObject<I>> mapObjects = new ArrayList<>();
 		mapObjects.add(map);
@@ -29,6 +31,29 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		getPlayer().move();
 		PlayerColCheck();
 	}
+
+	@Override
+	public double moveField(boolean xOrY) {
+		double offsetMaxX = map.getHeight() - viewportX;
+		double offsetMaxY = map.getHeight() - viewportY;
+		double offsetMinX = 0;
+		double offsetMinY = 0;
+		double camX = lora.getPos().x - viewportX / 2;
+		double camY = lora.getPos().y - viewportY / 2;
+		if (camX > offsetMaxX)  camX = offsetMaxX;
+		else if (camX < offsetMinX) camX = offsetMinX;
+		if (camY > offsetMaxY) camY = offsetMaxY;
+		else if (camY < offsetMinY)
+		camY = offsetMinY;
+
+		return xOrY ? camY * -1 : camX * -1;
+	}
+
+	public void updateScreenSize(double width,double height){
+		viewportX = width;
+		viewportY = height;
+	}
+
 
 	@Override
 	public void keyPressedReaction(KeyCode keyCode) {
@@ -144,7 +169,6 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 						map.getLayerMap().get(i).getY_pos() > lora.getPos().y - 192){
 					//could collide
 					if(lora.getColR().touches(map.getLayerMap().get(i).getCollisionRect(),(int)lora.getPos().x,(int)lora.getPos().y,map.getLayerMap().get(i).getX_pos(),map.getLayerMap().get(i).getY_pos())){
-//						lora.setVelocity(new Vertex(lora.getVelocity().x* dir.x, lora.getVelocity().y * dir.y));
 						if(lora.getPos().y < map.getLayerMap().get(i).getY_pos() && lora.getVelocity().y > 0){
 							lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
 							lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-3));
@@ -163,9 +187,6 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 						}
 
 					}
-//					System.out.println("Position: " + map.getLayerMap().get(i).getX_pos() +"\n  "+ (lora.getPos().x - 195));
-//					lora.setPos(new Vertex(0,0));
-//					System.out.println("Lora At" + lora.getPos());
 				}
 
 			}
