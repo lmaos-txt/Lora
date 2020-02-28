@@ -13,11 +13,12 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	MapObject<I> map;
 	double viewportX;
 	double viewportY;
-
+	double oldOffsetX;
+	double oldOffsetY;
 
 	public Lora() {
-		super(new Player<>("res/sprites/lora standing front.png", new Vertex(600,600)),
-				640,640);
+		super(new Player<>("res/sprites/lora standing front.png", new Vertex(200,100)),
+				600,600);
 		lora = (Player<I>) getPlayer();
 		map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
 				new Vertex(0,0));
@@ -34,19 +35,37 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	@Override
 	public double moveField(boolean xOrY) {
-		double offsetMaxX = map.getHeight() - viewportX;
+		double offsetMaxX = map.getWidth() - viewportX;
 		double offsetMaxY = map.getHeight() - viewportY;
-		double offsetMinX = 0;
-		double offsetMinY = 0;
-		double camX = lora.getPos().x - viewportX / 2;
-		double camY = lora.getPos().y - viewportY / 2;
-		if (camX > offsetMaxX)  camX = offsetMaxX;
-		else if (camX < offsetMinX) camX = offsetMinX;
-		if (camY > offsetMaxY) camY = offsetMaxY;
-		else if (camY < offsetMinY)
-		camY = offsetMinY;
+		double camX = lora.getPos().x + ((lora.getColR().getP1().x + lora.getColR().getP2().x) /2) - viewportX / 2;
+		double camY = lora.getPos().y + ((lora.getColR().getP1().y + lora.getColR().getP2().y) /2) - viewportY / 2;
+		double moveX = 0;
+		double moveY = 0;
 
-		return xOrY ? camY * -1 : camX * -1;
+		moveX = oldOffsetX - camX;
+		moveY = oldOffsetY - camY;
+
+		if(viewportX > map.getWidth()) moveX = 0;
+		if(viewportY > map.getHeight()) moveY = 0;
+
+		if(camX < 0 && (Math.signum(camX) == -1)){
+			moveX = 0;
+		}
+		if(camX > offsetMaxX && (Math.signum(camX) == 1)){
+			moveX = 0;
+		}
+		if(camY < 0 && (Math.signum(camY) == -1)){
+			moveY = 0;
+		}
+		if(camY > offsetMaxY && (Math.signum(camY) == 1)){
+			moveY = 0;
+		}
+
+		oldOffsetX = camX;
+		if(!xOrY)
+		oldOffsetY = camY;
+
+		return xOrY ? moveX : moveY ;
 	}
 
 	public void updateScreenSize(double width,double height){
@@ -159,6 +178,22 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	}
 
 	private void PlayerColCheck() {
+		if(lora.getPos().x + lora.getColR().getP2().x > map.getWidth() - 3){
+			lora.setVelocity(new Vertex(0, lora.getVelocity().y));
+			lora.setPos(new Vertex(lora.getPos().x-3,lora.getPos().y));
+		}
+		if(lora.getPos().x + lora.getColR().getP1().x < 0){
+			lora.setVelocity(new Vertex(0, lora.getVelocity().y));
+			lora.setPos(new Vertex(lora.getPos().x+3,lora.getPos().y));
+		}
+		if(lora.getPos().y + lora.getColR().getP1().y < 0){
+			lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
+			lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y+3));
+		}
+		if(lora.getPos().y + lora.getColR().getP2().y > map.getHeight() - 3){
+			lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
+			lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-3));
+		}
 		for (int i = 0; i < map.getLayerMap().size(); i++) {
 			if(map.getLayerMap().get(i).getLayer() < lora.getLayer())
 				continue;
@@ -188,9 +223,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 					}
 				}
-
 			}
-
 		}
 	}
 }
