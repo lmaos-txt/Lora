@@ -15,6 +15,10 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	double viewportY;
 	double oldOffsetX;
 	double oldOffsetY;
+	List<MapObject<I>> mapObjects;
+	List<Enemy<I>> enemies;
+
+
 
 	public Lora() {
 		super(new Player<>("res/sprites/lora standing front.png", new Vertex(200,100)),
@@ -22,9 +26,11 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		lora = (Player<I>) getPlayer();
 		map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
 				new Vertex(0,0));
-		List<MapObject<I>> mapObjects = new ArrayList<>();
+		mapObjects = new ArrayList<>();
+		enemies = new ArrayList<>();
 		mapObjects.add(map);
 		getGOss().add(mapObjects);
+		getGOss().add(enemies);
 	}
 
 	@Override
@@ -96,10 +102,17 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 				case VK_D:
 					if(getPlayer().getVelocity().x != 3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
-					lora.setFacing(new Vertex(0,-1));
+					lora.setFacing(new Vertex(1,0));
+					break;
+				case VK_SPACE:
+					PlayerAttack();
 					break;
 			}
 		}
+	}
+
+	private void PlayerAttack() {
+		System.out.println("BLAM");
 	}
 
 	@Override
@@ -226,4 +239,13 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 			}
 		}
 	}
+
+//	private void SpawnEnemy(int type, int amount){
+//		for (int i = 0; i < amount; i++) {
+//			Enemy<I> tmpEnemy = new Enemy<I>();
+//			getGOss().get(1).add(tmpEnemy);
+//		}
+//
+//	}
+
 }
