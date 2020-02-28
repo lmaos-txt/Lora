@@ -66,7 +66,6 @@ public class MapObject<I> extends ImageObject<I> {
             if(layerMap.get(i).getY_pos()> maxHeight) maxHeight = layerMap.get(i).getY_pos();
         }
         mapHeight =  maxHeight + 64;
-        System.out.println(mapHeight);
     }
 
     public void calcWidth() {
@@ -75,6 +74,5 @@ public class MapObject<I> extends ImageObject<I> {
             if(layerMap.get(i).getX_pos() > maxWidth) maxWidth = layerMap.get(i).getY_pos();
         }
         mapWidth =  maxWidth + 64;
-        System.out.println(mapWidth);
     }
 }

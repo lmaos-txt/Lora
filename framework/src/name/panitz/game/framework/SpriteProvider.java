@@ -3,7 +3,10 @@ package name.panitz.game.framework;
 import java.util.List;
 
 public class SpriteProvider<I> extends ImageObject<I> {
+
     String tag;
+    List<String> tagList;
+    boolean isAnimated;
 
     public SpriteProvider(String imageFileName) {
         super(imageFileName);
@@ -28,6 +31,13 @@ public class SpriteProvider<I> extends ImageObject<I> {
     public void setTag(String Tag) {
         tag = Tag;
     }
+    public void setTagList(List<String> TagList){
+        tagList = TagList;
+    }
+
+    public List<String> getTagList() {
+        return tagList;
+    }
 
     public I getImage() {
         return super.img;
@@ -36,4 +46,5 @@ public class SpriteProvider<I> extends ImageObject<I> {
     public void setCollisionBound(Rect set){
         super.setCollisionBounds(set);
     }
+
 }

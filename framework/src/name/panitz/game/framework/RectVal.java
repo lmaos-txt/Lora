@@ -12,6 +12,8 @@ public class RectVal {
 			return spriteGrid1C;
 		if(tag.equals("Player"))
 			return playerGridC;
+		if(tag.equals("blobSpriteGrid"))
+			return blobGridC;
 		return null;
 	}
 	public static List<Rect> getImages(String tag){
@@ -19,6 +21,8 @@ public class RectVal {
 			return  spriteGrid1I;
 		if(tag.equals("playerGrid"))
 			return  playerGridI;
+		if(tag.equals("blobSpriteGrid"))
+			return blobGridI;
 		return null;
 	}
 	public static List<String> getText(String tag) {
@@ -26,6 +30,8 @@ public class RectVal {
 			return spriteGrid1T;
 		if(tag.equals("Player"))
 			return playerGridT;
+		if(tag.equals("blobSpriteGrid"))
+			return blobGridT;
 		return null;
 	}
 
@@ -93,6 +99,29 @@ public class RectVal {
 	public static final List<String> playerGridT = Collections.unmodifiableList( //TODO Collision Player Grid
 			new ArrayList<>() {{
 //	TODO			add("Path"); add("Grass"); add("Stone"); add("Water"); add("Mailbox"); add("Couldron"); // add(""); add("");
+			}}
+	);
+
+	public static final List<Rect> blobGridC = Collections.unmodifiableList( //TODO Collision Blob Grid
+			new ArrayList<>() {{
+				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
+				add(new Rect(new Vertex(10,7),new Vertex(21,19)));
+				add(new Rect(new Vertex(11,9),new Vertex(22,21)));
+				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
+			}}
+	);
+	public static final List<String> blobGridT = Collections.unmodifiableList( //TODO Text Blob Grid
+			new ArrayList<>() {{
+				for (int x = 0; x < 4; x++) {
+					add("blob"+ x);
+				}
+			}}
+	);
+	public static final List<Rect> blobGridI = Collections.unmodifiableList( //TODO Image Blob Grid
+			new ArrayList<>() {{
+				for (int x = 0; x < 4; x++) {
+					add(new Rect(new Vertex(x*32,0),new Vertex((x+1)*32,32)));
+				}
 			}}
 	);
 

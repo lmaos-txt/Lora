@@ -71,7 +71,7 @@ public class FXContextTool implements GraphicsTool<Image> {
 	}
 
 	@Override
-	public Image generateImage(String name, GameObject<Image> go, int scaleFactor) {
+	public Image generateImage(String name, GameObject<Image> go, int scaleFactor) {//Stock Image Generator
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream(name), 16 * scaleFactor,
 				16 * scaleFactor, true, true);
 		go.setWidth(image.getWidth());
@@ -101,6 +101,7 @@ public class FXContextTool implements GraphicsTool<Image> {
 		return SwingFXUtils.toFXImage(scaleOp.filter(before, after),null);
 	}
 
+
 	@Override
 	public Image generateMap(String URL, GameObject<Image> go, List<MapEntity> layerMap) {
 		try {
@@ -123,7 +124,7 @@ public class FXContextTool implements GraphicsTool<Image> {
 				buff = ImageIO.read(fileArray.get(i));
 				for (int y = 0; y < buff.getHeight(); y++) {
 					for (int x = 0; x < buff.getWidth(); x++) {
-						Color tmpC = new Color(buff.getRGB(x, y));
+						Color tmpC = new Color(buff.getRGB(x, y)); // Farbe in Image holen um zu entscheiden welcher Sprite gesetzt werden muss
 						gc.drawImage(getImage(tmpC), x * 64, y * 64);
 						match = ptrn.matcher(fileArray.get(i).toString());
 						if(match.find()&& ! tmpC.equals(new Color(255,255,255))) {
@@ -161,10 +162,11 @@ public class FXContextTool implements GraphicsTool<Image> {
 			List<Rect> curCGrid = RectVal.getCollision(tag);
 			List<String> curTGrid = RectVal.getText(tag);
 
-			for (int j = 0; j < tripleMin(curCGrid.size(),curIGrid.size(),curTGrid.size()); j++) {
-				spriteList.add(new Sprite("res/sprites/"+ tag +".png", curTGrid.get(j), g,
-						curCGrid.get(j), curIGrid.get(j)));
-			}
+//			for (int j = 0; j < tripleMin(curCGrid.size(),curIGrid.size(),curTGrid.size()); j++) {
+//				spriteList.add(new Sprite("res/sprites/"+ tag +".png", curTGrid.get(j), g,
+//						curCGrid.get(j), curIGrid.get(j)));
+//			}
+			spriteList.add(new Sprite("res/sprites/"+tag+".png",g,curTGrid,curCGrid,curIGrid));
 		}
 	}
 
@@ -177,8 +179,9 @@ public class FXContextTool implements GraphicsTool<Image> {
 	private Image getSprite(List<Sprite> list, String tag) {
 		if (spritesLoaded) {
 			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i).getTag().equals(tag))
-					return list.get(i).getImage();
+				for (int j = 0; j < list.get(i).getAnimationFrames().size() ; j++) {
+					if(list.get(i).getTagList().get(j).equals(tag)) return list.get(i).getAnimationFrames().get(j);
+				}
 			}
 		}
 		return null;
@@ -199,6 +202,7 @@ public class FXContextTool implements GraphicsTool<Image> {
 			return null;
 		return null;
 	}
+
 	private Rect getImageColR(Color c) {
 		String tag = "";
 		if (c.equals(new Color(0, 255, 0)))

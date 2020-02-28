@@ -3,7 +3,6 @@ package de.lmaos._code.lora;
 
 import name.panitz.game.framework.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +17,8 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	List<MapObject<I>> mapObjects;
 	List<Enemy<I>> enemies;
 
-
-
 	public Lora() {
-		super(new Player<>("res/sprites/lora standing front.png", new Vertex(200,100)),
+		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
 				600,600);
 		lora = (Player<I>) getPlayer();
 		map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),

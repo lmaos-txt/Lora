@@ -1,7 +1,4 @@
-package de.lmaos._code.lora;
-
-import name.panitz.game.framework.*;
-
+package name.panitz.game.framework;
 
 public class Player<I> extends ImageObject<I> {
 	Vertex facing;

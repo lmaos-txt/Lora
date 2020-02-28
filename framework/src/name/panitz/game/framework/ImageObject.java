@@ -1,5 +1,6 @@
 package name.panitz.game.framework;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ImageObject<I> extends AbstractGameObject<I> {
@@ -9,6 +10,13 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     protected boolean changed = true;
     String imageFileName;
     Rect collisionBounds;
+    int animationFramesCount;
+    int animationSpeed;
+    public List<I> animationFrames;
+    List<Rect> collisionBoundRects;
+    int currentFrameCount;
+    int skipCounter;
+    boolean isLinearAnimation;
 
     public ImageObject(String imageFileName) {
         super(0, 0);
@@ -46,6 +54,22 @@ public class ImageObject<I> extends AbstractGameObject<I> {
         img = g.generateImage(imageFileName, this, ImageScaleFactor, ImgR);
     }
 
+    public void initializeAnimatedSprite(GraphicsTool<I> g, List<Rect> ImgR) {
+        img = g.generateImage(imageFileName, this, ImageScaleFactor);
+        animationFrames = new ArrayList<>();
+        for (int i = 0; i < ImgR.size(); i++) {
+            animationFrames.add(makeSprite(g,ImgR.get(i)));
+        }
+    }
+
+    private I makeSprite(GraphicsTool<I> g, Rect ImageR){
+        return g.generateImage(imageFileName,this,ImageScaleFactor,ImageR);
+    }
+
+    public void setAnimationCollisionBound(List<Rect> inR){
+        collisionBoundRects = inR;
+    }
+
     @Override
     public void paintTo(GraphicsTool<I> g) {
         if (changed) {
@@ -56,6 +80,20 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     }
     void setCollisionBounds(Rect toSet){
         collisionBounds = toSet;
+    }
+
+    public void makeAnimation(){
+        //TODO Override On lower Level
+        if(isLinearAnimation){
+            if(skipCounter >= animationSpeed){
+                img = animationFrames.get(currentFrameCount);
+                currentFrameCount++;
+                if(currentFrameCount >= animationFramesCount) currentFrameCount = 0;
+            } skipCounter ++;
+        }else{
+            //TODO NON LINEAR ANIMATIONS
+        }
+        changed = true;
     }
 
 }
