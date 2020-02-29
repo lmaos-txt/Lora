@@ -9,14 +9,15 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     protected I img;
     protected boolean changed = true;
     String imageFileName;
-    Rect collisionBounds;
-    int animationFramesCount;
+//    Rect collisionBounds;
     int animationSpeed;
     public List<I> animationFrames;
     List<Rect> collisionBoundRects;
     int currentFrameCount;
     int skipCounter;
     boolean isLinearAnimation;
+    Vertex oldDirection;
+    int animationLine;
 
     public ImageObject(String imageFileName) {
         super(0, 0);
@@ -42,6 +43,21 @@ public class ImageObject<I> extends AbstractGameObject<I> {
         this.imageFileName = imageFileName;
     }
 
+    public int getAnimationSpeed() {
+        return animationSpeed;
+    }
+
+    public void setAnimationSpeed(int animationSpeed) {
+        this.animationSpeed = animationSpeed;
+    }
+
+    public boolean getAnimationType() {
+        return isLinearAnimation;
+    }
+
+    public void setAnimationType(boolean linearAnimation) {
+        isLinearAnimation = linearAnimation;
+    }
     public String getImageFileName() {
         return imageFileName;
     }
@@ -49,6 +65,10 @@ public class ImageObject<I> extends AbstractGameObject<I> {
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
         changed = true;
+    }
+
+    public void setOldDirection(Vertex oldDirection) {
+        this.oldDirection = oldDirection;
     }
 
     public void initializeImage(GraphicsTool<I> g) {
@@ -82,20 +102,36 @@ public class ImageObject<I> extends AbstractGameObject<I> {
         }
         if (null != img) g.drawImage(img, getPos().x, getPos().y);
     }
-    void setCollisionBounds(Rect toSet){
-        collisionBounds = toSet;
-    }
+//    void setCollisionBounds(Rect toSet){
+//        collisionBounds = toSet;
+//    }
 
-    public void makeAnimation(){
+    public void makeAnimation(Vertex direction){
         //TODO Override On lower Level
         if(isLinearAnimation){
             if(skipCounter >= animationSpeed){
                 img = animationFrames.get(currentFrameCount);
                 currentFrameCount++;
-                if(currentFrameCount >= animationFramesCount) currentFrameCount = 0;
-            } skipCounter ++;
+                if(currentFrameCount >= animationFrames.size()) currentFrameCount = 0;
+                skipCounter = 0;
+            }
+            skipCounter ++;
         }else{
             //TODO NON LINEAR ANIMATIONS
+            if(null == oldDirection) oldDirection = direction;
+//            if()
+            if(oldDirection == direction){
+                if(skipCounter >= animationSpeed){
+                    img = animationFrames.get(currentFrameCount+RectVal.getEntityAnimationsLines(direction));
+                    currentFrameCount++;
+                    if(currentFrameCount >= animationFrames.size()) currentFrameCount = 0;
+                    skipCounter = 0;
+                }
+                skipCounter ++;
+            }else{
+                animationLine = RectVal.getEntityAnimationsLines(direction);
+                img = animationFrames.get(animationLine);
+            }
         }
         changed = true;
     }

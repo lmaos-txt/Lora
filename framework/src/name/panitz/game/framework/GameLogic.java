@@ -52,7 +52,7 @@ public interface GameLogic<I, S> extends Movable, Paintable<I> {
 
     void pause();
 
-    void setupPlayer();
+    void setupEntities(GraphicsTool<I> g);
 
 	void updateScreenSize(double width, double height);
 

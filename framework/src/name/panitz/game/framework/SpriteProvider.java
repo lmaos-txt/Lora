@@ -46,8 +46,8 @@ public class SpriteProvider<I> extends ImageObject<I> {
         return super.img;
     }
 
-    public void setCollisionBound(Rect set){
-        super.setCollisionBounds(set);
-    }
+//    public void setCollisionBound(Rect set){
+//        super.setCollisionBounds(set);
+//    }
 
 }

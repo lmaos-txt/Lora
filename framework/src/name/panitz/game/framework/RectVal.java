@@ -12,7 +12,7 @@ public class RectVal {
 			return spriteGrid1C;
 		if(tag.equals("Player"))
 			return playerGridC;
-		if(tag.equals("blobSpriteGrid"))
+		if(tag.equals("blobEnemyGrid"))
 			return blobGridC;
 		return null;
 	}
@@ -21,7 +21,7 @@ public class RectVal {
 			return  spriteGrid1I;
 		if(tag.equals("playerGrid"))
 			return  playerGridI;
-		if(tag.equals("blobSpriteGrid"))
+		if(tag.equals("blobEnemyGrid"))
 			return blobGridI;
 		return null;
 	}
@@ -30,7 +30,7 @@ public class RectVal {
 			return spriteGrid1T;
 		if(tag.equals("Player"))
 			return playerGridT;
-		if(tag.equals("blobSpriteGrid"))
+		if(tag.equals("blobEnemyGrid"))
 			return blobGridT;
 		return null;
 	}
@@ -81,8 +81,8 @@ public class RectVal {
 	public static final List<Rect> playerGridI = Collections.unmodifiableList( //TODO Image Player Grid
 			new ArrayList<>() {{
 				for (int y = 0; y < 8; y++) {
-					for (int x = 0; x < 8; x++) {
-						add(new Rect(new Vertex(x*16,y*16), new Vertex((x+1)*16,(y+1)*16)));
+					for (int x = 0; x < 3; x++) {
+						add(new Rect(new Vertex(x*32,y*32), new Vertex((x+1)*32,(y+1)*32)));
 					}
 				}
 			}}
@@ -108,21 +108,52 @@ public class RectVal {
 				add(new Rect(new Vertex(10,7),new Vertex(21,19)));
 				add(new Rect(new Vertex(11,9),new Vertex(22,21)));
 				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
+				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
+				add(new Rect(new Vertex(10,7),new Vertex(21,19)));
+				add(new Rect(new Vertex(11,9),new Vertex(22,21)));
+				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
 			}}
 	);
 	public static final List<String> blobGridT = Collections.unmodifiableList( //TODO Text Blob Grid
 			new ArrayList<>() {{
-				for (int x = 0; x < 4; x++) {
+				for (int x = 0; x < 8; x++) {
 					add("blob"+ x);
 				}
 			}}
 	);
 	public static final List<Rect> blobGridI = Collections.unmodifiableList( //TODO Image Blob Grid
 			new ArrayList<>() {{
-				for (int x = 0; x < 4; x++) {
-					add(new Rect(new Vertex(x*32,0),new Vertex((x+1)*32,32)));
+				for (int y = 0; y < 2; y++) {
+					for (int x = 0; x < 4; x++) {
+						if(!(y==1 && x==3))
+						add(new Rect(new Vertex(x * 32, y*32), new Vertex((x + 1) * 32, 32*(y + 1))));
+					}
 				}
 			}}
 	);
 
+	public static String getEnemyTypeResources(int i) {
+		if(i == 0) return "res/sprites/blobEnemyGrid.png";
+		return "";
+	}
+
+	public static double[] getEnemyTypeStats(int i) { //Health | DMG | Armour
+		if(i == 0) return new double[]{1, 1, 1};
+		return new double[]{};
+	}
+	public static boolean getAnimationStatus(int i){
+		return i == 0;
+	}
+	public static int getAnimationSpeed(int i){
+		if(i == 0) return 3;
+		return 0;
+	}
+
+	public static int getEntityAnimationsLines(Vertex direction) {
+		if(direction.equals(new Vertex(0,1))) return 0;
+		if(direction.equals(new Vertex(1,0))) return 3;
+		if(direction.equals(new Vertex(0,-1))) return 6;
+		if(direction.equals(new Vertex(-1,0))) return 9;
+		return 0;
+	}
 }

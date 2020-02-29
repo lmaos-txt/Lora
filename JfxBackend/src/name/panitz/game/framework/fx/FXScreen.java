@@ -27,11 +27,10 @@ public class FXScreen extends Canvas {
 		GraphicsContext gc = this.getGraphicsContext2D();
 		GraphicsTool<Image> gct = new FXContextTool(gc);
 		gct.loadSprites(gct);
-//		gct.loadEnemies(gct);
 
 
 		logic.paintTo(gct);
-		logic.setupPlayer();
+		logic.setupEntities(gct);
 
 
 		setOnKeyPressed((ev) -> {

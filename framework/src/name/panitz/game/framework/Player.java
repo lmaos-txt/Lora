@@ -1,15 +1,20 @@
 package name.panitz.game.framework;
 
-public class Player<I> extends ImageObject<I> {
+public class Player<I> extends SpriteProvider<I> {
 	Vertex facing;
 	Rect colR;
 	double health;
 	double maxHealth;
 	int level;
 	double layer;
+	boolean moving;
 
 	public Player(String imageFileName, Vertex corner) {
 		super(imageFileName, corner, new Vertex(0, 0));
+	}
+	public void initPlayer(GraphicsTool<I> g){
+		super.setOldDirection(new Vertex(0,1));
+		super.initializeAnimatedSprite(g,RectVal.getImages("playerGrid"));
 	}
 
 	public void setImage(I img) {
@@ -52,4 +57,14 @@ public class Player<I> extends ImageObject<I> {
 		this.colR = colR;
 	}
 
+	public void setMoving(boolean in){
+		moving = in;
+	}
+
+	@Override
+	public void paintTo(GraphicsTool<I> g) {
+		if(moving && null!= facing)
+		super.makeAnimation(facing);
+		if(null != img) g.drawImage(animationFrames.get(currentFrameCount),getPos().x,getPos().y);
+	}
 }

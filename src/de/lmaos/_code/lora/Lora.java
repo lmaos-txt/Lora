@@ -16,16 +16,16 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	double oldOffsetY;
 	List<MapObject<I>> mapObjects;
 	List<Enemy<I>> enemies;
+	GraphicsTool<I> drawPen;
 
 	public Lora() {
-		super(new Player<>("res/sprites/lora standing front.png", new Vertex(0,0)),
+		super(new Player<>("res/sprites/lora.png", new Vertex(0,0)),
 				600,600);
 		lora = (Player<I>) getPlayer();
 		map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
 				new Vertex(0,0));
 		mapObjects = new ArrayList<>();
 		enemies = new ArrayList<>();
-		SpawnEnemy(0,1);
 		mapObjects.add(map);
 		getGOss().add(mapObjects);
 		getGOss().add(enemies);
@@ -35,7 +35,6 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	public void doChecks() {
 		getPlayer().move();
 		PlayerColCheck();
-		SpawnEnemy(0,1);
 	}
 
 	@Override
@@ -87,21 +86,25 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 					if(getPlayer().getVelocity().y != -3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
 					lora.setFacing(new Vertex(0,-1));
+					lora.setMoving(true);
 					break;
 				case VK_A:
 					if(getPlayer().getVelocity().x != -3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
 					lora.setFacing(new Vertex(-1,0));
+					lora.setMoving(true);
 					break;
 				case VK_S:
 					if(getPlayer().getVelocity().y != 3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y +3));
 					lora.setFacing(new Vertex(0,1));
+					lora.setMoving(true);
 					break;
 				case VK_D:
 					if(getPlayer().getVelocity().x != 3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
 					lora.setFacing(new Vertex(1,0));
+					lora.setMoving(true);
 					break;
 				case VK_SPACE:
 					PlayerAttack();
@@ -121,22 +124,26 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 				case VK_W:
 					if(getPlayer().getVelocity().y <0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y + 3));
+						lora.setMoving(false);
 					}
 					break;
 				case VK_A:
 					if(getPlayer().getVelocity().x <0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
+						lora.setMoving(false);
 					}
 					break;
 				case VK_S:
 					if(getPlayer().getVelocity().y >0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
+						lora.setMoving(false);
 					}
 					break;
 
 				case VK_D:
 					if(getPlayer().getVelocity().x >0){
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
+						lora.setMoving(false);
 					}
 					break;
 				case VK_E:
@@ -168,9 +175,13 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	}
 
 	@Override
-	public void setupPlayer() {
+	public void setupEntities(GraphicsTool<I> g) {
+		drawPen = g;
+		lora.initPlayer(g);
+		lora.setFacing(new Vertex(0,1));
 		lora.setLayer(map.getEntityAt(lora.getPos()).getLayer() + 1);
 		lora.setColR(new Rect(new Vertex(16,8),new Vertex(48,48)));
+		spawnEnemy(0,1,g);
 	}
 
 	@Override
@@ -239,10 +250,9 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		}
 	}
 
-	private void SpawnEnemy(int type, int amount){
-//			Enemy<I> tmpEnemy = new Enemy<>(0,new Vertex(200,200));
-//			enemies.add(tmpEnemy);
-
+	private void spawnEnemy(int type, int amount, GraphicsTool<I> g){
+			Enemy<I> tmpEnemy = new Enemy<>(type,new Vertex(100,100),g);
+			enemies.add(tmpEnemy);
 	}
 
 }

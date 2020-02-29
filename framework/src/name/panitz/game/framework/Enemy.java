@@ -1,15 +1,32 @@
 package name.panitz.game.framework;
 
 
+import java.util.Objects;
+
 public class Enemy<I> extends SpriteProvider<I> {
 	int enemyType;// 0 = Blob;
 	double health;
 	double dmg;
 	double armour;
+	Vertex facing;
+	boolean hasFacing;
 
-//	public Enemy(int EnemyType, Vertex Pos){
-//		super(EnemyVal);
-//	}
+	public Enemy(int EnemyType, Vertex Pos,GraphicsTool<I> g){
+		super(RectVal.getEnemyTypeResources(EnemyType));
+		String tag = RectVal.getEnemyTypeResources(EnemyType).substring(12).substring(0,
+				RectVal.getEnemyTypeResources(EnemyType).substring(12).length() - 4);
+		super.initializeAnimatedSprite(g, RectVal.getImages(tag));
+		super.setTagList(RectVal.getText(tag));
+		super.setAnimationCollisionBound(RectVal.getCollision(tag));
+		super.setPos(Pos);
+		super.setAnimationType(RectVal.getAnimationStatus(enemyType));
+		super.setAnimationSpeed(RectVal.getAnimationSpeed(EnemyType));
+		enemyType = EnemyType;
+		double[] tmp = RectVal.getEnemyTypeStats(0);
+		health = tmp[0];
+		dmg = tmp[1];
+		armour = tmp[2];
+	}
 
 	public Enemy(String imageFileName) {
 		super(imageFileName);
@@ -30,9 +47,11 @@ public class Enemy<I> extends SpriteProvider<I> {
 
 	@Override
 	public void paintTo(GraphicsTool<I> g) {
-		if(changed)
-			img = g.generateImage(imageFileName,this, ImageScaleFactor);
-		if(null != img) g.drawImage(img,getPos().x,getPos().y);
+		if(hasFacing){
+			super.makeAnimation(facing);
+		}else{
+			super.makeAnimation(null);
+		}
+		if(null!= img) g.drawImage(animationFrames.get(currentFrameCount), getPos().x,getPos().y);
 	}
-
 }

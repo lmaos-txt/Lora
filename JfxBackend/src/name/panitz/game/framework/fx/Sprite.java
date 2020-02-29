@@ -17,7 +17,7 @@ public class Sprite extends SpriteProvider<Image> {
         super(imageFileName);
         super.setTag(tag);
         super.initializeSubImage(g, ImgR);
-        super.setCollisionBound(CollisionR);
+//        super.setCollisionBound(CollisionR);
     }
 
     public Sprite(String imageFileName,  GraphicsTool<Image> g, List<String> tag, List<Rect> CollisionR, List<Rect> ImgR) { //AnimationSpriteConstructor
