@@ -22,6 +22,10 @@ public class ImageObject<I> extends AbstractGameObject<I> {
         super(0, 0);
         this.imageFileName = imageFileName;
     }
+    public ImageObject(I imgIN){
+        super(0,0);
+        img = imgIN;
+    }
 
     public ImageObject(String imageFileName, Vertex pos, Vertex motion) {
         super(0, 0, pos, motion);

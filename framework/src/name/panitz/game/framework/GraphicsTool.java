@@ -43,5 +43,6 @@ public interface GraphicsTool<I> {
     I generateImage(String name, GameObject<I> go, int ScaleFactor, Rect imgRect);
 
     I generateMap(String URL, GameObject<I> go, List<MapEntity> layerMap);
+
 }
 

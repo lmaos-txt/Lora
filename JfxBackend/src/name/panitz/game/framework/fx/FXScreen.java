@@ -24,10 +24,10 @@ public class FXScreen extends Canvas {
 		this.setHeight(logic.getHeight());
 		setFocusTraversable(true);
 
-
 		GraphicsContext gc = this.getGraphicsContext2D();
 		GraphicsTool<Image> gct = new FXContextTool(gc);
 		gct.loadSprites(gct);
+//		gct.loadEnemies(gct);
 
 
 		logic.paintTo(gct);
@@ -61,7 +61,6 @@ public class FXScreen extends Canvas {
 				GraphicsContext gc = getGraphicsContext2D();
 				setHeight(getScene().getWindow().getHeight());
 				setWidth(getScene().getWindow().getWidth());
-
 
 				logic.updateScreenSize(getScene().getWindow().getWidth(),getScene().getWindow().getHeight());
 				gc.clearRect(0, 0, getWidth(), getHeight());

@@ -11,6 +11,9 @@ public class SpriteProvider<I> extends ImageObject<I> {
     public SpriteProvider(String imageFileName) {
         super(imageFileName);
     }
+    public SpriteProvider(I img) {
+        super(img);
+    }
 
     public SpriteProvider(String imageFileName, Vertex pos, Vertex motion) {
         super(imageFileName, pos, motion);

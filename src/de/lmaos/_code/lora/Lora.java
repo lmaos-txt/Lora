@@ -25,6 +25,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 				new Vertex(0,0));
 		mapObjects = new ArrayList<>();
 		enemies = new ArrayList<>();
+		SpawnEnemy(0,1);
 		mapObjects.add(map);
 		getGOss().add(mapObjects);
 		getGOss().add(enemies);
@@ -34,6 +35,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	public void doChecks() {
 		getPlayer().move();
 		PlayerColCheck();
+		SpawnEnemy(0,1);
 	}
 
 	@Override
@@ -237,12 +239,10 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		}
 	}
 
-//	private void SpawnEnemy(int type, int amount){
-//		for (int i = 0; i < amount; i++) {
-//			Enemy<I> tmpEnemy = new Enemy<I>();
-//			getGOss().get(1).add(tmpEnemy);
-//		}
-//
-//	}
+	private void SpawnEnemy(int type, int amount){
+//			Enemy<I> tmpEnemy = new Enemy<>(0,new Vertex(200,200));
+//			enemies.add(tmpEnemy);
+
+	}
 
 }

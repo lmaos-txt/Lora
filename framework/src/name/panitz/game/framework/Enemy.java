@@ -1,13 +1,15 @@
 package name.panitz.game.framework;
 
-import java.util.List;
 
-public class Enemy<I> extends ImageObject<I> {
+public class Enemy<I> extends SpriteProvider<I> {
 	int enemyType;// 0 = Blob;
 	double health;
 	double dmg;
 	double armour;
-	List<Rect> imageRects;
+
+//	public Enemy(int EnemyType, Vertex Pos){
+//		super(EnemyVal);
+//	}
 
 	public Enemy(String imageFileName) {
 		super(imageFileName);
@@ -17,6 +19,7 @@ public class Enemy<I> extends ImageObject<I> {
 		super(imageFileName, pos, motion);
 	}
 
+
 	public Enemy(String imageFileName, Vertex position) {
 		super(imageFileName, position);
 	}
@@ -24,4 +27,12 @@ public class Enemy<I> extends ImageObject<I> {
 	public Enemy(String imageFileName, double width) {
 		super(imageFileName, width);
 	}
+
+	@Override
+	public void paintTo(GraphicsTool<I> g) {
+		if(changed)
+			img = g.generateImage(imageFileName,this, ImageScaleFactor);
+		if(null != img) g.drawImage(img,getPos().x,getPos().y);
+	}
+
 }
