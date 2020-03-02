@@ -80,7 +80,7 @@ public class RectVal {
 
 	public static final List<Rect> playerGridI = Collections.unmodifiableList( //TODO Image Player Grid
 			new ArrayList<>() {{
-				for (int y = 0; y < 8; y++) {
+				for (int y = 0; y < 4; y++) {
 					for (int x = 0; x < 3; x++) {
 						add(new Rect(new Vertex(x*32,y*32), new Vertex((x+1)*32,(y+1)*32)));
 					}
@@ -104,14 +104,14 @@ public class RectVal {
 
 	public static final List<Rect> blobGridC = Collections.unmodifiableList( //TODO Collision Blob Grid
 			new ArrayList<>() {{
-				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
-				add(new Rect(new Vertex(10,7),new Vertex(21,19)));
-				add(new Rect(new Vertex(11,9),new Vertex(22,21)));
-				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
-				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
-				add(new Rect(new Vertex(10,7),new Vertex(21,19)));
-				add(new Rect(new Vertex(11,9),new Vertex(22,21)));
-				add(new Rect(new Vertex(10,10),new Vertex(22,21)));
+				add(new Rect(new Vertex(10,10),new Vertex(22*2,21*2)));
+				add(new Rect(new Vertex(10,7),new Vertex(21*2,19*2)));
+				add(new Rect(new Vertex(11,9),new Vertex(22*2,21*2)));
+				add(new Rect(new Vertex(10,10),new Vertex(22*2,21*2)));
+				add(new Rect(new Vertex(10,10),new Vertex(22*2,21*2)));
+				add(new Rect(new Vertex(10,7),new Vertex(21*2,19*2)));
+				add(new Rect(new Vertex(11,9),new Vertex(22*2,21*2)));
+				add(new Rect(new Vertex(10,10),new Vertex(22*2,21*2)));
 			}}
 	);
 	public static final List<String> blobGridT = Collections.unmodifiableList( //TODO Text Blob Grid
@@ -146,14 +146,15 @@ public class RectVal {
 	}
 	public static int getAnimationSpeed(int i){
 		if(i == 0) return 3;
+		if(i == 1) return 3;
 		return 0;
 	}
 
 	public static int getEntityAnimationsLines(Vertex direction) {
-		if(direction.equals(new Vertex(0,1))) return 0;
-		if(direction.equals(new Vertex(1,0))) return 3;
-		if(direction.equals(new Vertex(0,-1))) return 6;
-		if(direction.equals(new Vertex(-1,0))) return 9;
+		if(direction.x == 0 && direction.y == 1) return 0;
+		if(direction.x == 1 && direction.y == 0) return 3;
+		if(direction.x == 0 && direction.y == -1) return 6;
+		if(direction.x == -1 && direction.y== 0) return 9;
 		return 0;
 	}
 }

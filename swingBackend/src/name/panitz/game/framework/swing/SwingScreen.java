@@ -31,6 +31,7 @@ public class SwingScreen extends JPanel {
             repaint();
             getToolkit().sync();
 
+
             logic.playSounds(soundTool);
             requestFocus();
         });

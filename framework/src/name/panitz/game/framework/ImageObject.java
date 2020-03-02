@@ -71,6 +71,10 @@ public class ImageObject<I> extends AbstractGameObject<I> {
         this.oldDirection = oldDirection;
     }
 
+    public void setCurrentFrameCount(int currentFrameCount) {
+        this.currentFrameCount = currentFrameCount;
+    }
+
     public void initializeImage(GraphicsTool<I> g) {
         img = g.generateImage(imageFileName, this, ImageScaleFactor);
     }
@@ -105,7 +109,6 @@ public class ImageObject<I> extends AbstractGameObject<I> {
 //    void setCollisionBounds(Rect toSet){
 //        collisionBounds = toSet;
 //    }
-
     public void makeAnimation(Vertex direction){
         //TODO Override On lower Level
         if(isLinearAnimation){
@@ -118,22 +121,25 @@ public class ImageObject<I> extends AbstractGameObject<I> {
             skipCounter ++;
         }else{
             //TODO NON LINEAR ANIMATIONS
-            if(null == oldDirection) oldDirection = direction;
-//            if()
-            if(oldDirection == direction){
+            if(oldDirection.x ==direction.x && oldDirection.y == direction.y){
+                animationLine = RectVal.getEntityAnimationsLines(direction);
                 if(skipCounter >= animationSpeed){
-                    img = animationFrames.get(currentFrameCount+RectVal.getEntityAnimationsLines(direction));
-                    currentFrameCount++;
-                    if(currentFrameCount >= animationFrames.size()) currentFrameCount = 0;
+//                    img = animationFrames.get(currentFrameCount + animationLine);
+                    setCurrentFrameCount(++currentFrameCount);
+                    if(currentFrameCount >= 3){
+                        currentFrameCount = 0;
+                    }
                     skipCounter = 0;
+                    oldDirection = direction;
                 }
                 skipCounter ++;
             }else{
                 animationLine = RectVal.getEntityAnimationsLines(direction);
                 img = animationFrames.get(animationLine);
+                oldDirection = direction;
+                currentFrameCount = 0;
             }
         }
-        changed = true;
     }
 
 }

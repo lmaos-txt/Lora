@@ -162,10 +162,6 @@ public class FXContextTool implements GraphicsTool<Image> {
 			List<Rect> curCGrid = RectVal.getCollision(tag);
 			List<String> curTGrid = RectVal.getText(tag);
 
-//			for (int j = 0; j < tripleMin(curCGrid.size(),curIGrid.size(),curTGrid.size()); j++) {
-//				spriteList.add(new Sprite("res/sprites/"+ tag +".png", curTGrid.get(j), g,
-//						curCGrid.get(j), curIGrid.get(j)));
-//			}
 			spriteList.add(new Sprite("res/sprites/"+tag+".png",g,curTGrid,curCGrid,curIGrid));
 		}
 	}

@@ -2,7 +2,9 @@ package de.lmaos._code.lora;
 
 
 import name.panitz.game.framework.*;
+import name.panitz.game.framework.swing.SwingGame;
 
+import java.lang.invoke.LambdaMetafactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +21,10 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	GraphicsTool<I> drawPen;
 
 	public Lora() {
-		super(new Player<>("res/sprites/lora.png", new Vertex(0,0)),
-				600,600);
+		super(new Player<>("res/sprites/lora.png", new Vertex(640,640)),
+				800,600);
 		lora = (Player<I>) getPlayer();
-		map = new MapObject<>("src\\res\\maps\\map1", new Vertex(0,0),
+		map = new MapObject<>("src\\res\\maps\\map5", new Vertex(0,0),
 				new Vertex(0,0));
 		mapObjects = new ArrayList<>();
 		enemies = new ArrayList<>();
@@ -35,6 +37,11 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	public void doChecks() {
 		getPlayer().move();
 		PlayerColCheck();
+		PlayerToEntityColCheck();
+		if(lora.getHealth()== 0|| enemies.size() == 0){
+			pause();
+			drawPen.drawString(0,0,20,"Helvetica", "The Game is over");
+		}
 	}
 
 	@Override
@@ -77,7 +84,6 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		viewportY = height;
 	}
 
-
 	@Override
 	public void keyPressedReaction(KeyCode keyCode) {
 		if(null != keyCode){
@@ -85,25 +91,25 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 				case VK_W:
 					if(getPlayer().getVelocity().y != -3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y - 3));
-					lora.setFacing(new Vertex(0,-1));
+					if(!lora.isMoving()) lora.setFacing(new Vertex(0,-1));
 					lora.setMoving(true);
 					break;
 				case VK_A:
 					if(getPlayer().getVelocity().x != -3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x - 3,getPlayer().getVelocity().y));
-					lora.setFacing(new Vertex(-1,0));
+					if(!lora.isMoving()) lora.setFacing(new Vertex(-1,0));
 					lora.setMoving(true);
 					break;
 				case VK_S:
 					if(getPlayer().getVelocity().y != 3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x,getPlayer().getVelocity().y +3));
-					lora.setFacing(new Vertex(0,1));
+					if(!lora.isMoving()) lora.setFacing(new Vertex(0,1));
 					lora.setMoving(true);
 					break;
 				case VK_D:
 					if(getPlayer().getVelocity().x != 3)
 						getPlayer().setVelocity(new Vertex(getPlayer().getVelocity().x + 3,getPlayer().getVelocity().y));
-					lora.setFacing(new Vertex(1,0));
+					if(!lora.isMoving()) lora.setFacing(new Vertex(1,0));
 					lora.setMoving(true);
 					break;
 				case VK_SPACE:
@@ -111,10 +117,6 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 					break;
 			}
 		}
-	}
-
-	private void PlayerAttack() {
-		System.out.println("BLAM");
 	}
 
 	@Override
@@ -159,20 +161,72 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 					lora.setPos(new Vertex(0,0));
 					break;
 				case LEFT_ARROW:
-					lora.setPos(new Vertex(lora.getPos().x-1,lora.getPos().y));
+					lora.setPos(new Vertex(lora.getPos().x-3,lora.getPos().y));
 					break;
 				case RIGHT_ARROW:
-					lora.setPos(new Vertex(lora.getPos().x+1,lora.getPos().y));
+					lora.setPos(new Vertex(lora.getPos().x+3,lora.getPos().y));
 					break;
 				case UP_ARROW:
-					lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-1));
+					lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-3));
 					break;
 				case DOWN_ARROW:
-					lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y+1));
+					lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y+3));
 					break;
 			}
 		}
 	}
+
+
+	private void PlayerAttack() {
+		List<Enemy<I>> noteToKill = new ArrayList<>();
+		for (Enemy<I> enemy : enemies) {
+
+			if(enemy.getLayer() == lora.getLayer()){
+				if(lora.getFacing().x == 0 && lora.getFacing().y == -1){
+					System.out.println("looking UP");
+					if(enemy.getPos().x + enemy.getColR().getWidth()> lora.getPos().x - 16 && enemy.getPos().x < lora.getPos().x + lora.getColR().getWidth() + 16 &&
+					enemy.getPos().y + enemy.getColR().getP2().y > lora.getPos().y - 25 && enemy.getPos().y < lora.getPos().y){
+						noteToKill.add(enemy);
+						System.out.println("killing UP");
+					}
+				}
+				if(lora.getFacing().x == 1 && lora.getFacing().y == 0){
+					System.out.println("looking right");
+					if(enemy.getPos().y + enemy.getColR().getHeight() > lora.getPos().y - 16 && enemy.getPos().y < lora.getPos().y + lora.getColR().getHeight()
+							&& enemy.getPos().x >lora.getPos().x + lora.getColR().getWidth() - 5 && enemy.getPos().x < lora.getColR().getWidth() + lora.getPos().x +32){
+						noteToKill.add(enemy);
+						System.out.println("killing right");
+					}
+				}
+				if(lora.getFacing().x == 0 && lora.getFacing().y == 1){
+					System.out.println("looking down");
+					if(enemy.getPos().x + enemy.getColR().getWidth() > lora.getPos().x - 16 && enemy.getPos().x < lora.getPos().x + lora.getColR().getWidth() + 16 &&
+						enemy.getPos().y > lora.getPos().y +lora.getColR().getHeight() && enemy.getPos().y < lora.getPos().x + lora.getColR().getHeight()){
+						noteToKill.add(enemy);
+						System.out.println("killing down");
+					}
+				}
+				if(lora.getFacing().x == -1 && lora.getFacing().y == 0){
+					System.out.println("looking left");
+					if(enemy.getPos().y + enemy.getColR().getHeight() > lora.getPos().y - 16 && enemy.getPos().y < lora.getPos().y + lora.getColR().getHeight()
+							&& enemy.getPos().x +enemy.getColR().getWidth() > lora.getPos().x - 32 && enemy.getPos().x + enemy.getColR().getWidth() < lora.getPos().x - 20){
+						noteToKill.add(enemy);
+						System.out.println("killing left");
+					}
+				}
+			}
+		}
+		if(noteToKill.size() > 0)
+		for (int i = 0; i < enemies.size(); i++) {
+			if(noteToKill.get(0).equals(enemies.get(i))){
+				enemies.remove(i);
+				noteToKill.remove(0);
+			}
+
+		}
+		noteToKill.clear();
+	}
+
 
 	@Override
 	public void setupEntities(GraphicsTool<I> g) {
@@ -181,7 +235,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		lora.setFacing(new Vertex(0,1));
 		lora.setLayer(map.getEntityAt(lora.getPos()).getLayer() + 1);
 		lora.setColR(new Rect(new Vertex(16,8),new Vertex(48,48)));
-		spawnEnemy(0,1,g);
+		spawnEnemy(0,4,g);
 	}
 
 	@Override
@@ -250,9 +304,48 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		}
 	}
 
-	private void spawnEnemy(int type, int amount, GraphicsTool<I> g){
-			Enemy<I> tmpEnemy = new Enemy<>(type,new Vertex(100,100),g);
-			enemies.add(tmpEnemy);
+	private void PlayerToEntityColCheck(){
+	if(enemies.size()<0) {
+		if (null != enemies.get(0).getColR())
+			for (Enemy<I> enemy : enemies){
+				if(lora.getColR().touches(enemy.getColR(),(int)lora.getPos().x,(int)lora.getPos().y,enemy.getPos().x,enemy.getPos().y)){
+					if(lora.getPos().x > enemy.getPos().x && lora.getVelocity().x < 0){
+						lora.setVelocity(new Vertex(0, lora.getVelocity().y));
+						lora.setPos(new Vertex(lora.getPos().x+3,lora.getPos().y));
+					}
+					if(lora.getPos().x < enemy.getPos().x && lora.getVelocity().x > 0){
+						lora.setVelocity(new Vertex(0, lora.getVelocity().y));
+						lora.setPos(new Vertex(lora.getPos().x-3,lora.getPos().y));
+					}
+					if(lora.getPos().y > enemy.getPos().y && lora.getVelocity().y < 0){
+						lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
+						lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y+3));
+					}
+					if(lora.getPos().y < enemy.getPos().y && lora.getVelocity().y > 0){
+						lora.setVelocity(new Vertex(lora.getVelocity().x, 0));
+						lora.setPos(new Vertex(lora.getPos().x,lora.getPos().y-3));
+					}
+					lora.setHealth(lora.getHealth()-1);
+					System.out.println(lora.getHealth());
+				}
+			}
 	}
+	}
+
+	private void spawnEnemy(int type, int amount, GraphicsTool<I> g){
+		Math.random();
+		for (int i = 0; i < amount; i++) {
+			String tag = RectVal.getEnemyTypeResources(type).substring(12).substring(0,
+					RectVal.getEnemyTypeResources(type).substring(12).length() - 4);
+			Enemy<I> tmpEnemy = new Enemy<>(type,new Vertex(Math.random()*1000+64*2,Math.random()*1000+64*2),g);
+			tmpEnemy.setLayer(map.getEntityAt(tmpEnemy.getPos()).getLayer() + 1 );
+			tmpEnemy.setAnimationCollisionBound(RectVal.getCollision(tag));
+			enemies.add(tmpEnemy);
+		}
+	}
+	public static void main(String[] args) {
+		SwingGame.startGame(new Lora<>());
+	}
+
 
 }

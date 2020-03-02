@@ -15,6 +15,7 @@ public class Player<I> extends SpriteProvider<I> {
 	public void initPlayer(GraphicsTool<I> g){
 		super.setOldDirection(new Vertex(0,1));
 		super.initializeAnimatedSprite(g,RectVal.getImages("playerGrid"));
+		super.setAnimationSpeed(RectVal.getAnimationSpeed(1));
 	}
 
 	public void setImage(I img) {
@@ -61,10 +62,19 @@ public class Player<I> extends SpriteProvider<I> {
 		moving = in;
 	}
 
+	public boolean isMoving() {
+		return moving;
+	}
+
+	public void setHealth(double health) {
+		this.health = health;
+	}
+
 	@Override
 	public void paintTo(GraphicsTool<I> g) {
 		if(moving && null!= facing)
 		super.makeAnimation(facing);
-		if(null != img) g.drawImage(animationFrames.get(currentFrameCount),getPos().x,getPos().y);
+		if(null != img) g.drawImage(animationFrames.get(currentFrameCount+animationLine),getPos().x,getPos().y);
+		if(null!=super.tag)setColR(RectVal.getCollision(super.tag).get(currentFrameCount+animationLine));
 	}
 }

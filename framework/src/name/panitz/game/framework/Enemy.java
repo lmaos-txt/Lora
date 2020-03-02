@@ -10,26 +10,26 @@ public class Enemy<I> extends SpriteProvider<I> {
 	double armour;
 	Vertex facing;
 	boolean hasFacing;
+	double layer;
+	Rect colR;
 
 	public Enemy(int EnemyType, Vertex Pos,GraphicsTool<I> g){
 		super(RectVal.getEnemyTypeResources(EnemyType));
 		String tag = RectVal.getEnemyTypeResources(EnemyType).substring(12).substring(0,
 				RectVal.getEnemyTypeResources(EnemyType).substring(12).length() - 4);
+		setTagList(RectVal.getText(tag));
 		super.initializeAnimatedSprite(g, RectVal.getImages(tag));
+		super.setTag(tag);
 		super.setTagList(RectVal.getText(tag));
 		super.setAnimationCollisionBound(RectVal.getCollision(tag));
 		super.setPos(Pos);
-		super.setAnimationType(RectVal.getAnimationStatus(enemyType));
+		super.setAnimationType(RectVal.getAnimationStatus(EnemyType));
 		super.setAnimationSpeed(RectVal.getAnimationSpeed(EnemyType));
 		enemyType = EnemyType;
 		double[] tmp = RectVal.getEnemyTypeStats(0);
 		health = tmp[0];
 		dmg = tmp[1];
 		armour = tmp[2];
-	}
-
-	public Enemy(String imageFileName) {
-		super(imageFileName);
 	}
 
 	public Enemy(String imageFileName, Vertex pos, Vertex motion) {
@@ -45,6 +45,24 @@ public class Enemy<I> extends SpriteProvider<I> {
 		super(imageFileName, width);
 	}
 
+	public Enemy(String imageFileName) {
+		super(imageFileName);
+	}
+	public void setLayer(double layer) {
+		this.layer = layer;
+	}
+
+	public double getLayer() {
+		return layer;
+	}
+	public Rect getColR() {
+		return colR;
+	}
+
+	public void setColR(Rect colR) {
+		this.colR = colR;
+	}
+
 	@Override
 	public void paintTo(GraphicsTool<I> g) {
 		if(hasFacing){
@@ -53,5 +71,6 @@ public class Enemy<I> extends SpriteProvider<I> {
 			super.makeAnimation(null);
 		}
 		if(null!= img) g.drawImage(animationFrames.get(currentFrameCount), getPos().x,getPos().y);
+		if(null!= super.tagList) setColR(RectVal.getCollision(super.tag).get(currentFrameCount));
 	}
 }
