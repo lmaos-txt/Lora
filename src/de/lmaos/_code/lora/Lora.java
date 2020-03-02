@@ -2,9 +2,7 @@ package de.lmaos._code.lora;
 
 
 import name.panitz.game.framework.*;
-import name.panitz.game.framework.swing.SwingGame;
 
-import java.lang.invoke.LambdaMetafactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +17,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	List<MapObject<I>> mapObjects;
 	List<Enemy<I>> enemies;
 	GraphicsTool<I> drawPen;
+	boolean playing = true;
 
 	public Lora() {
 		super(new Player<>("res/sprites/lora.png", new Vertex(640,640)),
@@ -35,13 +34,18 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 
 	@Override
 	public void doChecks() {
-		getPlayer().move();
-		PlayerColCheck();
-		PlayerToEntityColCheck();
-		if(lora.getHealth()== 0|| enemies.size() == 0){
-			pause();
-			drawPen.drawString(0,0,20,"Helvetica", "The Game is over");
+
+		if(playing){
+			getPlayer().move();
+			PlayerColCheck();
+			PlayerToEntityColCheck();
+			if(lora.getHealth() == 0|| enemies.size() == 0){
+				playing = false;
+			}
+		}else{
+			drawPen.drawString(lora.getPos().x,lora.getPos().y,20,"Helvetica", "The Game is over");
 		}
+
 	}
 
 	@Override
@@ -218,11 +222,14 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		}
 		if(noteToKill.size() > 0)
 		for (int i = 0; i < enemies.size(); i++) {
-			if(noteToKill.get(0).equals(enemies.get(i))){
-				enemies.remove(i);
-				noteToKill.remove(0);
+			if(noteToKill.size() > 0){
+				if(noteToKill.get(0).equals(enemies.get(i))){
+					enemies.remove(i);
+					noteToKill.remove(0);
+				}
+			}else{
+				break;
 			}
-
 		}
 		noteToKill.clear();
 	}
@@ -235,7 +242,9 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 		lora.setFacing(new Vertex(0,1));
 		lora.setLayer(map.getEntityAt(lora.getPos()).getLayer() + 1);
 		lora.setColR(new Rect(new Vertex(16,8),new Vertex(48,48)));
+		lora.setHealth(20);
 		spawnEnemy(0,4,g);
+		start();
 	}
 
 	@Override
@@ -305,7 +314,7 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 	}
 
 	private void PlayerToEntityColCheck(){
-	if(enemies.size()<0) {
+	if(enemies.size()>0) {
 		if (null != enemies.get(0).getColR())
 			for (Enemy<I> enemy : enemies){
 				if(lora.getColR().touches(enemy.getColR(),(int)lora.getPos().x,(int)lora.getPos().y,enemy.getPos().x,enemy.getPos().y)){
@@ -343,9 +352,9 @@ public class Lora<I,S> extends AbstractGame<I, S> {
 			enemies.add(tmpEnemy);
 		}
 	}
-	public static void main(String[] args) {
-		SwingGame.startGame(new Lora<>());
-	}
+//	public static void main(String[] args) {
+//		SwingGame.startGame(new Lora<>());
+//	}
 
 
 }
